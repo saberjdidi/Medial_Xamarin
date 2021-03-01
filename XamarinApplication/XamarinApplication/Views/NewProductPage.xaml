@@ -1,0 +1,1092 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<TabbedPage
+    x:Class="XamarinApplication.Views.NewProductPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:animations="clr-namespace:Rg.Plugins.Popup.Animations;assembly=Rg.Plugins.Popup"
+    xmlns:autocomplete="clr-namespace:Syncfusion.SfAutoComplete.XForms;assembly=Syncfusion.SfAutoComplete.XForms"
+    xmlns:converters="clr-namespace:XamarinApplication.Validation;assembly=XamarinApplication"
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+    xmlns:i18n="clr-namespace:XamarinApplication.Helpers"
+    xmlns:input="clr-namespace:Plugin.InputKit.Shared.Controls;assembly=Plugin.InputKit"
+    xmlns:inputLayout="clr-namespace:Syncfusion.XForms.TextInputLayout;assembly=Syncfusion.Core.XForms"
+    xmlns:local="clr-namespace:XamarinApplication"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+    mc:Ignorable="d">
+    <!-- <pages:PopupPage.Animation>
+        <animations:ScaleAnimation
+            DurationIn="400"
+            DurationOut="300"
+            EasingIn="SinOut"
+            EasingOut="SinIn"
+            HasBackgroundAnimation="True"
+            PositionIn="Center"
+            PositionOut="Center"
+            ScaleIn="1.2"
+            ScaleOut="0.8" />
+    </pages:PopupPage.Animation>
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:UsernameCorrectConverter x:Key="CodeCorrectConverter" />
+            <converters:UsernameCorrectToHideLabelConverter x:Key="UsernameCorrectToHideLabelConverter" />
+            <converters:NotNullOrEmptyStringConverter x:Key="NotNullOrEmptyStringConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <StackLayout
+        Margin="2,8,2,2"
+        HorizontalOptions="Center"
+        VerticalOptions="Center">
+        <ScrollView Orientation="Vertical">
+            <Frame
+                Margin="1"
+                BackgroundColor="#FDFFFC"
+                BorderColor="#FDFFFC"
+                HasShadow="true">
+
+                <StackLayout>
+                    <Label
+                        Margin="5,5,5,10"
+                        FontAttributes="Bold"
+                        FontSize="Large"
+                        HorizontalOptions="Center"
+                        Text="New Product"
+                        TextColor="Black" />
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="300" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <local:RoundedEntry
+                            x:Name="CodeEntry"
+                            Grid.Row="0"
+                            Placeholder="{i18n:Translate Code}"
+                            Text="{Binding Code, Mode=TwoWay}"
+                            TextColor="Black" />
+                        <Label
+                            Grid.Row="1"
+                            FontSize="Small"
+                            HorizontalTextAlignment="Center"
+                            IsVisible="False"
+                            Text="Code is Required"
+                            TextColor="OrangeRed">
+                            <Label.Triggers>
+                                <MultiTrigger TargetType="Label">
+                                    <MultiTrigger.Conditions>
+                                        <BindingCondition Binding="{Binding Source={x:Reference CodeEntry}, Path=Text, Converter={StaticResource NotNullOrEmptyStringConverter}}" Value="False" />
+                                    </MultiTrigger.Conditions>
+                                    <Setter Property="IsVisible" Value="{Binding Value}" />
+                                </MultiTrigger>
+                            </Label.Triggers>
+                        </Label>
+                        <local:RoundedEntry
+                            x:Name="DescriptionEntry"
+                            Grid.Row="2"
+                            Placeholder="{i18n:Translate Description}"
+                            Text="{Binding Description, Mode=TwoWay}"
+                            TextColor="Black"
+                            WidthRequest="500" />
+                        <Label
+                            Grid.Row="3"
+                            FontSize="Small"
+                            HorizontalTextAlignment="Center"
+                            IsVisible="False"
+                            Text="Description is Required"
+                            TextColor="OrangeRed"
+                            WidthRequest="210">
+                            <Label.Triggers>
+                                <MultiTrigger TargetType="Label">
+                                    <MultiTrigger.Conditions>
+                                        <BindingCondition Binding="{Binding Source={x:Reference DescriptionEntry}, Path=Text, Converter={StaticResource NotNullOrEmptyStringConverter}}" Value="False" />
+                                    </MultiTrigger.Conditions>
+                                    <Setter Property="IsVisible" Value="{Binding Value}" />
+                                </MultiTrigger>
+                            </Label.Triggers>
+                        </Label>
+                        <local:RoundedEntry
+                            Grid.Row="4"
+                            Placeholder="Note"
+                            Text="{Binding Note, Mode=TwoWay}"
+                            TextColor="Black"
+                            WidthRequest="500" />
+                        <Label
+                            Grid.Row="5"
+                            Grid.Column="0"
+                            FontAttributes="Bold"
+                            Text="Packaging Method"
+                            TextColor="#118AB2" />
+                        <Frame
+                            Grid.Row="6"
+                            Margin="1"
+                            BackgroundColor="#28BAAE"
+                            BorderColor="#28BAAE"
+                            CornerRadius="30"
+                            HasShadow="true"
+                            HeightRequest="20"
+                            WidthRequest="265">
+                            <autocomplete:SfAutoComplete
+                                x:Name="CountryEntry"
+                                Margin="-20,-10,-20,-10"
+                                DataSource="{Binding PackagingMethodAutoComplete}"
+                                DisplayMemberPath="code"
+                                HeightRequest="50"
+                                HorizontalOptions="CenterAndExpand"
+                                SelectedItem="{Binding PackagingMethod}"
+                                SuggestionMode="StartsWith"
+                                TextColor="Black"
+                                VerticalOptions="CenterAndExpand"
+                                WidthRequest="210" />
+                        </Frame>
+                        <Label
+                            Grid.Row="7"
+                            Grid.Column="0"
+                            FontAttributes="Bold"
+                            Text="Measure Unit"
+                            TextColor="#118AB2" />
+                        <Frame
+                            Grid.Row="8"
+                            Margin="1"
+                            BackgroundColor="#28BAAE"
+                            BorderColor="#28BAAE"
+                            CornerRadius="30"
+                            HasShadow="true"
+                            HeightRequest="20"
+                            WidthRequest="265">
+                            <autocomplete:SfAutoComplete
+                                x:Name="ContainerEntry"
+                                Margin="-20,-10,-20,-10"
+                                DataSource="{Binding MeasureUnitAutoComplete}"
+                                DisplayMemberPath="description"
+                                HeightRequest="50"
+                                HorizontalOptions="CenterAndExpand"
+                                SelectedItem="{Binding MeasureUnit}"
+                                SuggestionMode="StartsWith"
+                                TextColor="Black"
+                                VerticalOptions="CenterAndExpand"
+                                WidthRequest="210" />
+                        </Frame>
+
+                        <Label
+                            Grid.Row="9"
+                            FontSize="Small"
+                            HorizontalTextAlignment="Center"
+                            IsVisible="False"
+                            Text="Container is Required"
+                            TextColor="OrangeRed"
+                            WidthRequest="210">
+                            <Label.Triggers>
+                                <MultiTrigger TargetType="Label">
+                                    <MultiTrigger.Conditions>
+                                        <BindingCondition Binding="{Binding Source={x:Reference ContainerEntry}, Path=Text, Converter={StaticResource NotNullOrEmptyStringConverter}}" Value="False" />
+                                    </MultiTrigger.Conditions>
+                                    <Setter Property="IsVisible" Value="{Binding Value}" />
+                                </MultiTrigger>
+                            </Label.Triggers>
+                        </Label>
+                        <Label
+                            Grid.Row="10"
+                            FontAttributes="Bold"
+                            Text="{i18n:Translate Supplier}"
+                            TextColor="#118AB2" />
+                        <Frame
+                            Grid.Row="11"
+                            Margin="1"
+                            BackgroundColor="#28BAAE"
+                            BorderColor="#28BAAE"
+                            CornerRadius="30"
+                            HasShadow="true"
+                            HeightRequest="20"
+                            WidthRequest="265">
+                            <autocomplete:SfAutoComplete
+                                x:Name="CustomsDutyEntry"
+                                Grid.Column="1"
+                                Margin="-20,-10,-20,-10"
+                                DataSource="{Binding SupplierAutoComplete}"
+                                DisplayMemberPath="description"
+                                HeightRequest="50"
+                                HorizontalOptions="CenterAndExpand"
+                                SelectedItem="{Binding Supplier}"
+                                SuggestionMode="StartsWith"
+                                TextColor="Black"
+                                VerticalOptions="CenterAndExpand"
+                                WidthRequest="210" />
+                        </Frame>
+                        <Label
+                            Grid.Row="12"
+                            FontSize="Small"
+                            HorizontalTextAlignment="Center"
+                            IsVisible="False"
+                            Text="CustomsDuty is Required"
+                            TextColor="OrangeRed"
+                            WidthRequest="210">
+                            <Label.Triggers>
+                                <MultiTrigger TargetType="Label">
+                                    <MultiTrigger.Conditions>
+                                        <BindingCondition Binding="{Binding Source={x:Reference CustomsDutyEntry}, Path=Text, Converter={StaticResource NotNullOrEmptyStringConverter}}" Value="False" />
+                                    </MultiTrigger.Conditions>
+                                    <Setter Property="IsVisible" Value="{Binding Value}" />
+                                </MultiTrigger>
+                            </Label.Triggers>
+                        </Label>
+
+                        <Label
+                            Grid.Row="13"
+                            FontAttributes="Bold"
+                            Text="PurchaseCost"
+                            TextColor="#118AB2" />
+                        <Frame
+                            Grid.Row="14"
+                            Margin="1"
+                            BackgroundColor="#28BAAE"
+                            BorderColor="#28BAAE"
+                            CornerRadius="30"
+                            HasShadow="true"
+                            HeightRequest="20"
+                            WidthRequest="265">
+                            <autocomplete:SfAutoComplete
+                                x:Name="PurchaseCostEntry"
+                                Grid.Column="1"
+                                Margin="-20,-10,-20,-10"
+                                DataSource="{Binding SupplierAutoComplete}"
+                                DisplayMemberPath="description"
+                                HeightRequest="50"
+                                HorizontalOptions="CenterAndExpand"
+                                SelectedItem="{Binding PurchaseCost}"
+                                SuggestionMode="StartsWith"
+                                TextColor="Black"
+                                VerticalOptions="CenterAndExpand"
+                                WidthRequest="210" />
+                        </Frame>
+                        <Label
+                            Grid.Row="15"
+                            FontSize="Small"
+                            HorizontalTextAlignment="Center"
+                            IsVisible="False"
+                            Text="PurchaseCost is Required"
+                            TextColor="OrangeRed"
+                            WidthRequest="210">
+                            <Label.Triggers>
+                                <MultiTrigger TargetType="Label">
+                                    <MultiTrigger.Conditions>
+                                        <BindingCondition Binding="{Binding Source={x:Reference PurchaseCostEntry}, Path=Text, Converter={StaticResource NotNullOrEmptyStringConverter}}" Value="False" />
+                                    </MultiTrigger.Conditions>
+                                    <Setter Property="IsVisible" Value="{Binding Value}" />
+                                </MultiTrigger>
+                            </Label.Triggers>
+                        </Label>
+                        <StackLayout
+                            Grid.Row="16"
+                            HorizontalOptions="CenterAndExpand"
+                            Orientation="Horizontal">
+                            <Button
+                                BackgroundColor="#118AB2"
+                                Command="{Binding SaveProduct}"
+                                CornerRadius="20"
+                                HeightRequest="40"
+                                HorizontalOptions="Center"
+                                Text="Save"
+                                TextColor="#090C9B"
+                                WidthRequest="120">
+                                <Button.Triggers>
+                                    <MultiTrigger TargetType="Button">
+                                        <MultiTrigger.Conditions>
+                                            <BindingCondition Binding="{Binding Source={x:Reference CodeEntry}, Path=Text, Converter={StaticResource NotNullOrEmptyStringConverter}}" Value="True" />
+                                            <BindingCondition Binding="{Binding Source={x:Reference DescriptionEntry}, Path=Text, Converter={StaticResource NotNullOrEmptyStringConverter}}" Value="True" />
+                                            <BindingCondition Binding="{Binding Source={x:Reference CountryEntry}, Path=Text, Converter={StaticResource NotNullOrEmptyStringConverter}}" Value="True" />
+                                            <BindingCondition Binding="{Binding Source={x:Reference ContainerEntry}, Path=Text, Converter={StaticResource NotNullOrEmptyStringConverter}}" Value="True" />
+                                            <BindingCondition Binding="{Binding Source={x:Reference CustomsDutyEntry}, Path=Text, Converter={StaticResource NotNullOrEmptyStringConverter}}" Value="True" />
+                                            <BindingCondition Binding="{Binding Source={x:Reference CodeEntry}, Path=Text, Converter={StaticResource CodeCorrectConverter}}" Value="True" />
+                                        </MultiTrigger.Conditions>
+                                        <Setter Property="IsEnabled" Value="{Binding IsEnabled, Mode=TwoWay}" />
+                                    </MultiTrigger>
+                                </Button.Triggers>
+                            </Button>
+                            <Button
+                                BackgroundColor="#E0E2DB"
+                                Command="{Binding ClosePopup}"
+                                CornerRadius="20"
+                                HeightRequest="40"
+                                HorizontalOptions="Center"
+                                Text="{i18n:Translate Close}"
+                                TextColor="#8B2635"
+                                WidthRequest="120" />
+                        </StackLayout>
+                    </Grid>
+                </StackLayout>
+            </Frame>
+        </ScrollView>
+    </StackLayout>-->
+
+    <ContentPage
+        HeightRequest="60"
+        Icon="one.png"
+        WidthRequest="60">
+        <ContentPage.Resources>
+            <ResourceDictionary>
+                <converters:UsernameCorrectConverter x:Key="CodeCorrectConverter" />
+                <converters:UsernameCorrectToHideLabelConverter x:Key="UsernameCorrectToHideLabelConverter" />
+                <converters:NotNullOrEmptyStringConverter x:Key="NotNullOrEmptyStringConverter" />
+            </ResourceDictionary>
+        </ContentPage.Resources>
+        <ScrollView Orientation="Both">
+            <Frame
+                Margin="10,5,10,20"
+                BackgroundColor="#FDFFFC"
+                BorderColor="#D3D4D9"
+                HasShadow="true">
+                <StackLayout>
+                    <StackLayout HorizontalOptions="CenterAndExpand" Orientation="Horizontal">
+                        <Label
+                            Margin="5,5,5,10"
+                            FontAttributes="Bold"
+                            FontSize="Large"
+                            HorizontalOptions="Center"
+                            Text="{i18n:Translate New}"
+                            TextColor="Black" />
+                        <Label
+                            Margin="0,5,5,10"
+                            FontAttributes="Bold"
+                            FontSize="Large"
+                            HorizontalOptions="Center"
+                            Text="{i18n:Translate Product}"
+                            TextColor="Black" />
+                    </StackLayout>
+                    <Grid Padding="5">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="280" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <inputLayout:SfTextInputLayout
+                            Grid.Row="0"
+                            ContainerBackgroundColor="#E6EEF9"
+                            ContainerType="Outlined"
+                            FocusedColor="#0450C2"
+                            Hint="{i18n:Translate Code}"
+                            OutlineCornerRadius="20"
+                            UnfocusedColor="#28BAAE">
+                            <local:RoundedEntry
+                                x:Name="CodeEntry"
+                                Placeholder="{i18n:Translate Code}"
+                                Text="{Binding Code, Mode=TwoWay}"
+                                TextColor="Black" />
+                        </inputLayout:SfTextInputLayout>
+                        <Label
+                            Grid.Row="1"
+                            Margin="0,-15,0,0"
+                            FontSize="Small"
+                            HorizontalTextAlignment="Center"
+                            IsVisible="False"
+                            Text="Code is Required"
+                            TextColor="OrangeRed">
+                            <Label.Triggers>
+                                <MultiTrigger TargetType="Label">
+                                    <MultiTrigger.Conditions>
+                                        <BindingCondition Binding="{Binding Source={x:Reference CodeEntry}, Path=Text, Converter={StaticResource NotNullOrEmptyStringConverter}}" Value="False" />
+                                    </MultiTrigger.Conditions>
+                                    <Setter Property="IsVisible" Value="{Binding Value}" />
+                                </MultiTrigger>
+                            </Label.Triggers>
+                        </Label>
+                        <inputLayout:SfTextInputLayout
+                            Grid.Row="2"
+                            Margin="0,-15,0,0"
+                            ContainerBackgroundColor="#E6EEF9"
+                            ContainerType="Outlined"
+                            FocusedColor="#0450C2"
+                            Hint="{i18n:Translate Description}"
+                            OutlineCornerRadius="20"
+                            UnfocusedColor="#28BAAE">
+                            <local:RoundedEntry
+                                x:Name="DescriptionEntry"
+                                Placeholder="{i18n:Translate Description}"
+                                Text="{Binding Description, Mode=TwoWay}"
+                                TextColor="Black"
+                                WidthRequest="500" />
+                        </inputLayout:SfTextInputLayout>
+                        <Label
+                            Grid.Row="3"
+                            Margin="0,-15,0,0"
+                            FontSize="Small"
+                            HorizontalTextAlignment="Center"
+                            IsVisible="False"
+                            Text="Description is Required"
+                            TextColor="OrangeRed"
+                            WidthRequest="210">
+                            <Label.Triggers>
+                                <MultiTrigger TargetType="Label">
+                                    <MultiTrigger.Conditions>
+                                        <BindingCondition Binding="{Binding Source={x:Reference DescriptionEntry}, Path=Text, Converter={StaticResource NotNullOrEmptyStringConverter}}" Value="False" />
+                                    </MultiTrigger.Conditions>
+                                    <Setter Property="IsVisible" Value="{Binding Value}" />
+                                </MultiTrigger>
+                            </Label.Triggers>
+                        </Label>
+                        <inputLayout:SfTextInputLayout
+                            Grid.Row="4"
+                            Margin="0,-10,0,0"
+                            ContainerBackgroundColor="#E6EEF9"
+                            ContainerType="Outlined"
+                            FocusedColor="#0450C2"
+                            Hint="{i18n:Translate Supplier}"
+                            OutlineCornerRadius="20"
+                            UnfocusedColor="#28BAAE">
+                            <autocomplete:SfAutoComplete
+                                x:Name="SupplierEntry"
+                                BorderColor="Blue"
+                                DataSource="{Binding SupplierAutoComplete}"
+                                DisplayMemberPath="description"
+                                HeightRequest="50"
+                                HorizontalOptions="CenterAndExpand"
+                                NoResultsFoundFontAttributes="Bold"
+                                NoResultsFoundFontSize="16"
+                                NoResultsFoundText="{i18n:Translate NoResult}"
+                                NoResultsFoundTextColor="DarkGreen"
+                                SelectedItem="{Binding Supplier}"
+                                SuggestionMode="StartsWith"
+                                TextColor="Black"
+                                VerticalOptions="CenterAndExpand"
+                                WidthRequest="210" />
+                        </inputLayout:SfTextInputLayout>
+                        <Label
+                            Grid.Row="5"
+                            Margin="0,-15,0,0"
+                            FontSize="Small"
+                            HorizontalTextAlignment="Center"
+                            IsVisible="False"
+                            Text="Supplier is Required"
+                            TextColor="OrangeRed"
+                            WidthRequest="210">
+                            <Label.Triggers>
+                                <MultiTrigger TargetType="Label">
+                                    <MultiTrigger.Conditions>
+                                        <BindingCondition Binding="{Binding Source={x:Reference SupplierEntry}, Path=Text, Converter={StaticResource NotNullOrEmptyStringConverter}}" Value="False" />
+                                    </MultiTrigger.Conditions>
+                                    <Setter Property="IsVisible" Value="{Binding Value}" />
+                                </MultiTrigger>
+                            </Label.Triggers>
+                        </Label>
+                        <inputLayout:SfTextInputLayout
+                            Grid.Row="6"
+                            Margin="0,-10,0,0"
+                            ContainerBackgroundColor="#E6EEF9"
+                            ContainerType="Outlined"
+                            FocusedColor="#0450C2"
+                            Hint="{i18n:Translate PackagingMethod}"
+                            OutlineCornerRadius="20"
+                            UnfocusedColor="#28BAAE">
+                            <autocomplete:SfAutoComplete
+                                x:Name="PackagingMethodEntry"
+                                BorderColor="Blue"
+                                DataSource="{Binding PackagingMethodAutoComplete}"
+                                DisplayMemberPath="description"
+                                HeightRequest="50"
+                                HorizontalOptions="CenterAndExpand"
+                                NoResultsFoundFontAttributes="Bold"
+                                NoResultsFoundFontSize="16"
+                                NoResultsFoundText="{i18n:Translate NoResult}"
+                                NoResultsFoundTextColor="DarkGreen"
+                                SelectedItem="{Binding PackagingMethod}"
+                                SuggestionMode="StartsWith"
+                                TextColor="Black"
+                                VerticalOptions="CenterAndExpand"
+                                WidthRequest="210" />
+                        </inputLayout:SfTextInputLayout>
+                        <Label
+                            Grid.Row="7"
+                            Margin="0,-15,0,0"
+                            FontSize="Small"
+                            HorizontalTextAlignment="Center"
+                            IsVisible="False"
+                            Text="Packaging Method is Required"
+                            TextColor="OrangeRed"
+                            WidthRequest="210">
+                            <Label.Triggers>
+                                <MultiTrigger TargetType="Label">
+                                    <MultiTrigger.Conditions>
+                                        <BindingCondition Binding="{Binding Source={x:Reference PackagingMethodEntry}, Path=Text, Converter={StaticResource NotNullOrEmptyStringConverter}}" Value="False" />
+                                    </MultiTrigger.Conditions>
+                                    <Setter Property="IsVisible" Value="{Binding Value}" />
+                                </MultiTrigger>
+                            </Label.Triggers>
+                        </Label>
+                        <inputLayout:SfTextInputLayout
+                            Grid.Row="8"
+                            Margin="0,-10,0,0"
+                            ContainerBackgroundColor="#E6EEF9"
+                            ContainerType="Outlined"
+                            FocusedColor="#0450C2"
+                            Hint="{i18n:Translate MeasureUnit}"
+                            OutlineCornerRadius="20"
+                            UnfocusedColor="#28BAAE">
+                            <autocomplete:SfAutoComplete
+                                x:Name="MeasureUnitEntry"
+                                BorderColor="Blue"
+                                DataSource="{Binding MeasureUnitAutoComplete}"
+                                DisplayMemberPath="description"
+                                HeightRequest="50"
+                                HorizontalOptions="CenterAndExpand"
+                                NoResultsFoundFontAttributes="Bold"
+                                NoResultsFoundFontSize="16"
+                                NoResultsFoundText="{i18n:Translate NoResult}"
+                                NoResultsFoundTextColor="DarkGreen"
+                                SelectedItem="{Binding MeasureUnit}"
+                                SuggestionMode="StartsWith"
+                                TextColor="Black"
+                                VerticalOptions="CenterAndExpand"
+                                WidthRequest="210" />
+                        </inputLayout:SfTextInputLayout>
+                        <Label
+                            Grid.Row="9"
+                            Margin="0,-15,0,0"
+                            FontSize="Small"
+                            HorizontalTextAlignment="Center"
+                            IsVisible="False"
+                            Text="Measure Unit is Required"
+                            TextColor="OrangeRed"
+                            WidthRequest="210">
+                            <Label.Triggers>
+                                <MultiTrigger TargetType="Label">
+                                    <MultiTrigger.Conditions>
+                                        <BindingCondition Binding="{Binding Source={x:Reference MeasureUnitEntry}, Path=Text, Converter={StaticResource NotNullOrEmptyStringConverter}}" Value="False" />
+                                    </MultiTrigger.Conditions>
+                                    <Setter Property="IsVisible" Value="{Binding Value}" />
+                                </MultiTrigger>
+                            </Label.Triggers>
+                        </Label>
+                        <StackLayout
+                            Grid.Row="10"
+                            Margin="0,-10,0,0"
+                            Orientation="Horizontal">
+                            <Label
+                                FontAttributes="Bold"
+                                Text="{i18n:Translate Active}"
+                                TextColor="#118AB2" />
+                            <CheckBox IsChecked="{Binding Active, Mode=TwoWay}" />
+                            <Label
+                                FontAttributes="Bold"
+                                Text="{i18n:Translate Composed}"
+                                TextColor="#118AB2" />
+                            <CheckBox IsChecked="{Binding Composed, Mode=TwoWay}" />
+                            <Label
+                                FontAttributes="Bold"
+                                Text="FOB"
+                                TextColor="#118AB2" />
+                            <CheckBox IsChecked="{Binding FOB, Mode=TwoWay}" />
+                        </StackLayout>
+                        <!-- <StackLayout
+                            Grid.Row="11"
+                            Margin="0,-15,0,0"
+                            Orientation="Horizontal">
+                            <input:SelectionView
+                                x:Name="StatusEntry"
+                                BackgroundColor="Blue"
+                                ColumnNumber="1"
+                                ColumnSpacing="5"
+                                HorizontalOptions="FillAndExpand"
+                                ItemDisplayBinding="{Binding Value}"
+                                ItemsSource="{Binding ListStatus}"
+                                RowSpacing="5"
+                                SelectedItem="{Binding SelectedStatus}"
+                                SelectionType="RadioButton"
+                                VerticalOptions="FillAndExpand"
+                                Color="Blue" />
+                        </StackLayout>-->
+                    </Grid>
+                </StackLayout>
+            </Frame>
+        </ScrollView>
+    </ContentPage>
+    <ContentPage
+        HeightRequest="60"
+        IconImageSource="two"
+        WidthRequest="60">
+        <ContentPage.Resources>
+            <ResourceDictionary>
+                <converters:UsernameCorrectConverter x:Key="CodeCorrectConverter" />
+                <converters:UsernameCorrectToHideLabelConverter x:Key="UsernameCorrectToHideLabelConverter" />
+                <converters:NotNullOrEmptyStringConverter x:Key="NotNullOrEmptyStringConverter" />
+            </ResourceDictionary>
+        </ContentPage.Resources>
+        <ScrollView>
+            <Frame
+                Margin="10,5,10,20"
+                BackgroundColor="#FDFFFC"
+                BorderColor="#D3D4D9"
+                HasShadow="true">
+                <StackLayout>
+                    <StackLayout HorizontalOptions="CenterAndExpand" Orientation="Horizontal">
+                        <Label
+                            Margin="5,5,5,10"
+                            FontAttributes="Bold"
+                            FontSize="Large"
+                            HorizontalOptions="Center"
+                            Text="{i18n:Translate New}"
+                            TextColor="Black" />
+                        <Label
+                            Margin="0,5,5,10"
+                            FontAttributes="Bold"
+                            FontSize="Large"
+                            HorizontalOptions="Center"
+                            Text="{i18n:Translate Product}"
+                            TextColor="Black" />
+                    </StackLayout>
+                    <Grid Padding="5">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="280" />
+                            <ColumnDefinition Width="25" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Label
+                            Grid.Row="0"
+                            FontAttributes="Bold"
+                            Text="{i18n:Translate PurchaseCost}"
+                            TextColor="#118AB2" />
+                        <Grid Grid.Row="1">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="90" />
+                                <ColumnDefinition Width="200" />
+                            </Grid.ColumnDefinitions>
+                            <inputLayout:SfTextInputLayout
+                                Grid.Column="0"
+                                Margin="0,-10,0,0"
+                                ContainerBackgroundColor="#E6EEF9"
+                                ContainerType="Outlined"
+                                FocusedColor="#0450C2"
+                                Hint="{i18n:Translate Value}"
+                                OutlineCornerRadius="20"
+                                UnfocusedColor="#28BAAE">
+                                <local:RoundedEntry
+                                    Grid.Column="0"
+                                    Keyboard="Telephone"
+                                    Placeholder="Value"
+                                    Text="{Binding ValuePurchaseCost, Mode=TwoWay}"
+                                    TextColor="Black"
+                                    WidthRequest="500" />
+                            </inputLayout:SfTextInputLayout>
+                            <inputLayout:SfTextInputLayout
+                                Grid.Column="1"
+                                Margin="0,-10,0,0"
+                                ContainerBackgroundColor="#E6EEF9"
+                                ContainerType="Outlined"
+                                FocusedColor="#0450C2"
+                                Hint="{i18n:Translate Currency}"
+                                OutlineCornerRadius="20"
+                                UnfocusedColor="#28BAAE">
+                                <autocomplete:SfAutoComplete
+                                    x:Name="PurchaseCostEntry"
+                                    BorderColor="Blue"
+                                    DataSource="{Binding CurrencyAutoComplete}"
+                                    DisplayMemberPath="entity"
+                                    HeightRequest="50"
+                                    HorizontalOptions="CenterAndExpand"
+                                    NoResultsFoundFontAttributes="Bold"
+                                    NoResultsFoundFontSize="16"
+                                    NoResultsFoundText="{i18n:Translate NoResult}"
+                                    NoResultsFoundTextColor="DarkGreen"
+                                    SelectedItem="{Binding Currency}"
+                                    SuggestionMode="StartsWith"
+                                    TextColor="Black"
+                                    VerticalOptions="CenterAndExpand"
+                                    WidthRequest="210" />
+                            </inputLayout:SfTextInputLayout>
+                        </Grid>
+                        <Label
+                            Grid.Row="2"
+                            Margin="0,-15,0,0"
+                            FontSize="Small"
+                            HorizontalTextAlignment="Center"
+                            IsVisible="False"
+                            Text="PurchaseCost is Required"
+                            TextColor="OrangeRed"
+                            WidthRequest="210">
+                            <Label.Triggers>
+                                <MultiTrigger TargetType="Label">
+                                    <MultiTrigger.Conditions>
+                                        <BindingCondition Binding="{Binding Source={x:Reference PurchaseCostEntry}, Path=Text, Converter={StaticResource NotNullOrEmptyStringConverter}}" Value="False" />
+                                    </MultiTrigger.Conditions>
+                                    <Setter Property="IsVisible" Value="{Binding Value}" />
+                                </MultiTrigger>
+                            </Label.Triggers>
+                        </Label>
+                        <Grid Grid.Row="3">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="180" />
+                                <ColumnDefinition Width="100" />
+                            </Grid.ColumnDefinitions>
+                            <inputLayout:SfTextInputLayout
+                                Grid.Column="0"
+                                Margin="0,-5,0,0"
+                                ContainerBackgroundColor="#E6EEF9"
+                                ContainerType="Outlined"
+                                FocusedColor="#0450C2"
+                                Hint="{i18n:Translate UpdateCostDate}"
+                                OutlineCornerRadius="20"
+                                UnfocusedColor="#28BAAE">
+                                <DatePicker
+                                    Date="{Binding UpdateCostDate}"
+                                    Format="yyyy-MM-dd"
+                                    WidthRequest="270" />
+                            </inputLayout:SfTextInputLayout>
+                            <inputLayout:SfTextInputLayout
+                                Grid.Column="1"
+                                Margin="0,-5,0,0"
+                                ContainerBackgroundColor="#E6EEF9"
+                                ContainerType="Outlined"
+                                FocusedColor="#0450C2"
+                                Hint="{i18n:Translate Change}"
+                                OutlineCornerRadius="20"
+                                UnfocusedColor="#28BAAE">
+                                <local:RoundedEntry
+                                    x:Name="ChangeEntry"
+                                    Keyboard="Telephone"
+                                    Placeholder="Change"
+                                    Text="{Binding CostChange, Mode=TwoWay}"
+                                    TextColor="Black"
+                                    WidthRequest="500" />
+                            </inputLayout:SfTextInputLayout>
+                        </Grid>
+                        <Label
+                            Grid.Row="4"
+                            Margin="0,-15,0,0"
+                            FontSize="Small"
+                            HorizontalTextAlignment="Center"
+                            IsVisible="False"
+                            Text="Change is Required"
+                            TextColor="OrangeRed"
+                            WidthRequest="210">
+                            <Label.Triggers>
+                                <MultiTrigger TargetType="Label">
+                                    <MultiTrigger.Conditions>
+                                        <BindingCondition Binding="{Binding Source={x:Reference ChangeEntry}, Path=Text, Converter={StaticResource NotNullOrEmptyStringConverter}}" Value="False" />
+                                    </MultiTrigger.Conditions>
+                                    <Setter Property="IsVisible" Value="{Binding Value}" />
+                                </MultiTrigger>
+                            </Label.Triggers>
+                        </Label>
+                        <inputLayout:SfTextInputLayout
+                            Grid.Row="5"
+                            Margin="0,-10,0,0"
+                            ContainerBackgroundColor="#E6EEF9"
+                            ContainerType="Outlined"
+                            FocusedColor="#0450C2"
+                            Hint="{i18n:Translate PackagingCost}"
+                            OutlineCornerRadius="20"
+                            UnfocusedColor="#28BAAE">
+                            <local:RoundedEntry
+                                Keyboard="Telephone"
+                                Placeholder="Packaging Cost"
+                                Text="{Binding ValuePackagingCost, Mode=TwoWay}"
+                                TextColor="Black"
+                                WidthRequest="500" />
+                        </inputLayout:SfTextInputLayout>
+                        <inputLayout:SfTextInputLayout
+                            Grid.Row="6"
+                            Margin="0,-10,0,0"
+                            ContainerBackgroundColor="#E6EEF9"
+                            ContainerType="Outlined"
+                            FocusedColor="#0450C2"
+                            Hint="{i18n:Translate ImportVolume}"
+                            OutlineCornerRadius="20"
+                            UnfocusedColor="#28BAAE">
+                            <local:RoundedEntry
+                                Keyboard="Telephone"
+                                Placeholder="Import volume"
+                                Text="{Binding ImportVolume, Mode=TwoWay}"
+                                TextColor="Black"
+                                WidthRequest="500" />
+                        </inputLayout:SfTextInputLayout>
+                        <inputLayout:SfTextInputLayout
+                            Grid.Row="7"
+                            Margin="0,-10,0,0"
+                            ContainerBackgroundColor="#E6EEF9"
+                            ContainerType="Outlined"
+                            FocusedColor="#0450C2"
+                            Hint="{i18n:Translate Quantity}"
+                            OutlineCornerRadius="20"
+                            UnfocusedColor="#28BAAE">
+                            <local:RoundedEntry
+                                x:Name="QuantityEntry"
+                                Grid.Row="10"
+                                Keyboard="Telephone"
+                                Placeholder="Quantity"
+                                Text="{Binding ImportQuantity, Mode=TwoWay}"
+                                TextColor="Black"
+                                WidthRequest="500" />
+                        </inputLayout:SfTextInputLayout>
+                        <Label
+                            Grid.Row="8"
+                            Margin="0,-15,0,0"
+                            FontSize="Small"
+                            HorizontalTextAlignment="Center"
+                            IsVisible="False"
+                            Text="Quantity is Required"
+                            TextColor="OrangeRed"
+                            WidthRequest="210">
+                            <Label.Triggers>
+                                <MultiTrigger TargetType="Label">
+                                    <MultiTrigger.Conditions>
+                                        <BindingCondition Binding="{Binding Source={x:Reference QuantityEntry}, Path=Text, Converter={StaticResource NotNullOrEmptyStringConverter}}" Value="False" />
+                                    </MultiTrigger.Conditions>
+                                    <Setter Property="IsVisible" Value="{Binding Value}" />
+                                </MultiTrigger>
+                            </Label.Triggers>
+                        </Label>
+                        <inputLayout:SfTextInputLayout
+                            Grid.Row="9"
+                            Margin="0,-10,0,0"
+                            ContainerBackgroundColor="#E6EEF9"
+                            ContainerType="Outlined"
+                            FocusedColor="#0450C2"
+                            Hint="{i18n:Translate CustomsDuty}"
+                            OutlineCornerRadius="20"
+                            UnfocusedColor="#28BAAE">
+                            <autocomplete:SfAutoComplete
+                                x:Name="CustomsDutyEntry"
+                                BorderColor="Blue"
+                                DataSource="{Binding CustomAutoComplete}"
+                                DisplayMemberPath="description"
+                                HeightRequest="50"
+                                HorizontalOptions="CenterAndExpand"
+                                NoResultsFoundFontAttributes="Bold"
+                                NoResultsFoundFontSize="16"
+                                NoResultsFoundText="{i18n:Translate NoResult}"
+                                NoResultsFoundTextColor="DarkGreen"
+                                SelectedItem="{Binding CustomsDuty}"
+                                SuggestionMode="StartsWith"
+                                TextColor="Black"
+                                VerticalOptions="CenterAndExpand"
+                                WidthRequest="210" />
+                        </inputLayout:SfTextInputLayout>
+                        <Label
+                            Grid.Row="10"
+                            FontSize="Small"
+                            HorizontalTextAlignment="Center"
+                            IsVisible="False"
+                            Text="CustomsDuty is Required"
+                            TextColor="OrangeRed"
+                            WidthRequest="210">
+                            <Label.Triggers>
+                                <MultiTrigger TargetType="Label">
+                                    <MultiTrigger.Conditions>
+                                        <BindingCondition Binding="{Binding Source={x:Reference CustomsDutyEntry}, Path=Text, Converter={StaticResource NotNullOrEmptyStringConverter}}" Value="False" />
+                                    </MultiTrigger.Conditions>
+                                    <Setter Property="IsVisible" Value="{Binding Value}" />
+                                </MultiTrigger>
+                            </Label.Triggers>
+                        </Label>
+                    </Grid>
+                </StackLayout>
+            </Frame>
+        </ScrollView>
+    </ContentPage>
+    <ContentPage
+        HeightRequest="60"
+        IconImageSource="three"
+        WidthRequest="60">
+        <ContentPage.Resources>
+            <ResourceDictionary>
+                <converters:UsernameCorrectConverter x:Key="CodeCorrectConverter" />
+                <converters:UsernameCorrectToHideLabelConverter x:Key="UsernameCorrectToHideLabelConverter" />
+                <converters:NotNullOrEmptyStringConverter x:Key="NotNullOrEmptyStringConverter" />
+            </ResourceDictionary>
+        </ContentPage.Resources>
+        <ScrollView BackgroundColor="Transparent">
+            <Frame
+                Margin="10,5,10,20"
+                BackgroundColor="#FDFFFC"
+                BorderColor="#D3D4D9"
+                HasShadow="true">
+                <StackLayout>
+                    <StackLayout HorizontalOptions="CenterAndExpand" Orientation="Horizontal">
+                        <Label
+                            Margin="5,5,5,10"
+                            FontAttributes="Bold"
+                            FontSize="Large"
+                            HorizontalOptions="Center"
+                            Text="{i18n:Translate New}"
+                            TextColor="Black" />
+                        <Label
+                            Margin="0,5,5,10"
+                            FontAttributes="Bold"
+                            FontSize="Large"
+                            HorizontalOptions="Center"
+                            Text="{i18n:Translate Product}"
+                            TextColor="Black" />
+                    </StackLayout>
+                    <Grid Padding="5">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="280" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <inputLayout:SfTextInputLayout
+                            Grid.Row="0"
+                            ContainerBackgroundColor="#E6EEF9"
+                            ContainerType="Outlined"
+                            FocusedColor="#0450C2"
+                            Hint="{i18n:Translate Width}"
+                            OutlineCornerRadius="20"
+                            UnfocusedColor="#28BAAE">
+                            <local:RoundedEntry
+                                Placeholder="Width"
+                                Text="{Binding Width, Mode=TwoWay}"
+                                TextColor="Black"
+                                WidthRequest="500" />
+                        </inputLayout:SfTextInputLayout>
+                        <inputLayout:SfTextInputLayout
+                            Grid.Row="1"
+                            ContainerBackgroundColor="#E6EEF9"
+                            ContainerType="Outlined"
+                            FocusedColor="#0450C2"
+                            Hint="{i18n:Translate Height}"
+                            OutlineCornerRadius="20"
+                            UnfocusedColor="#28BAAE">
+                            <local:RoundedEntry
+                                Placeholder="Height"
+                                Text="{Binding Height, Mode=TwoWay}"
+                                TextColor="Black"
+                                WidthRequest="500" />
+                        </inputLayout:SfTextInputLayout>
+                        <inputLayout:SfTextInputLayout
+                            Grid.Row="2"
+                            ContainerBackgroundColor="#E6EEF9"
+                            ContainerType="Outlined"
+                            FocusedColor="#0450C2"
+                            Hint="{i18n:Translate Length}"
+                            OutlineCornerRadius="20"
+                            UnfocusedColor="#28BAAE">
+                            <local:RoundedEntry
+                                Placeholder="Length"
+                                Text="{Binding Length, Mode=TwoWay}"
+                                TextColor="Black"
+                                WidthRequest="500" />
+                        </inputLayout:SfTextInputLayout>
+                        <inputLayout:SfTextInputLayout
+                            Grid.Row="3"
+                            ContainerBackgroundColor="#E6EEF9"
+                            ContainerType="Outlined"
+                            FocusedColor="#0450C2"
+                            Hint="{i18n:Translate Note}"
+                            OutlineCornerRadius="20"
+                            UnfocusedColor="#28BAAE">
+                            <local:RoundedEntry
+                                HeightRequest="80"
+                                Placeholder="Note"
+                                Text="{Binding Note, Mode=TwoWay}"
+                                TextColor="Black"
+                                WidthRequest="500" />
+                        </inputLayout:SfTextInputLayout>
+                        <StackLayout
+                            Grid.Row="4"
+                            Margin="0,20,0,0"
+                            HeightRequest="50"
+                            HorizontalOptions="CenterAndExpand"
+                            Orientation="Horizontal">
+                            <Button
+                                BackgroundColor="#00B2CA"
+                                Command="{Binding SaveProduct}"
+                                CornerRadius="25"
+                                HorizontalOptions="Center"
+                                Text="{i18n:Translate Save}"
+                                TextColor="#090C9B"
+                                WidthRequest="140">
+                                <Button.Triggers>
+                                    <MultiTrigger TargetType="Button">
+                                        <MultiTrigger.Conditions>
+                                            <BindingCondition Binding="{Binding Source={x:Reference CodeEntry}, Path=Text, Converter={StaticResource NotNullOrEmptyStringConverter}}" Value="True" />
+                                            <BindingCondition Binding="{Binding Source={x:Reference DescriptionEntry}, Path=Text, Converter={StaticResource NotNullOrEmptyStringConverter}}" Value="True" />
+                                            <BindingCondition Binding="{Binding Source={x:Reference SupplierEntry}, Path=Text, Converter={StaticResource NotNullOrEmptyStringConverter}}" Value="True" />
+                                            <BindingCondition Binding="{Binding Source={x:Reference PackagingMethodEntry}, Path=Text, Converter={StaticResource NotNullOrEmptyStringConverter}}" Value="True" />
+                                            <BindingCondition Binding="{Binding Source={x:Reference MeasureUnitEntry}, Path=Text, Converter={StaticResource NotNullOrEmptyStringConverter}}" Value="True" />
+                                            <BindingCondition Binding="{Binding Source={x:Reference PurchaseCostEntry}, Path=Text, Converter={StaticResource NotNullOrEmptyStringConverter}}" Value="True" />
+                                            <BindingCondition Binding="{Binding Source={x:Reference ChangeEntry}, Path=Text, Converter={StaticResource NotNullOrEmptyStringConverter}}" Value="True" />
+                                            <BindingCondition Binding="{Binding Source={x:Reference QuantityEntry}, Path=Text, Converter={StaticResource NotNullOrEmptyStringConverter}}" Value="True" />
+                                            <BindingCondition Binding="{Binding Source={x:Reference CustomsDutyEntry}, Path=Text, Converter={StaticResource NotNullOrEmptyStringConverter}}" Value="True" />
+                                        </MultiTrigger.Conditions>
+                                        <Setter Property="IsEnabled" Value="{Binding IsEnabled, Mode=TwoWay}" />
+                                    </MultiTrigger>
+                                </Button.Triggers>
+                            </Button>
+                            <Button
+                                BackgroundColor="#E0E2DB"
+                                Command="{Binding ClosePopup}"
+                                CornerRadius="25"
+                                HorizontalOptions="Center"
+                                Text="{i18n:Translate Close}"
+                                TextColor="#8B2635"
+                                WidthRequest="140" />
+                        </StackLayout>
+                    </Grid>
+                </StackLayout>
+            </Frame>
+        </ScrollView>
+    </ContentPage>
+
+</TabbedPage>

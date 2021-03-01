@@ -1,0 +1,217 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="XamarinApplication.Views.RequestsPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:converter="clr-namespace:XamarinApplication.Converters;assembly=XamarinApplication"
+    xmlns:custom="clr-namespace:XamarinApplication;assembly=XamarinApplication"
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+    xmlns:extended="clr-namespace:Xamarin.Forms.Extended;assembly=Xamarin.Forms.Extended.InfiniteScrolling"
+    xmlns:local="clr-namespace:XamarinApplication.Converters;assembly=XamarinApplication"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewModels="clr-namespace:XamarinApplication.ViewModels"
+    mc:Ignorable="d">
+    <!--<ContentPage.BindingContext>
+        <viewModels:RequestsViewModel />
+    </ContentPage.BindingContext>-->
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <local:BackgroundColorConverter x:Key="BackgroundStatusConverter" />
+            <local:StringStatusConverter x:Key="StringStatusEnumConverter" />
+            <local:VisibilityConverter x:Key="visibilityConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Command="{Binding SearchPopup}" IconImageSource="ic_search_white_24dp" />
+    </ContentPage.ToolbarItems>
+    <StackLayout Padding="5">
+        <!--<Entry Text="{Binding AccessToken}" />
+        <Button
+            BackgroundColor="DodgerBlue"
+            Command="{Binding GetIdeasCommand}"
+            FontSize="20"
+            Text="Get Requests"
+            TextColor="White" />-->
+        <Label
+            x:Name="label"
+            FontSize="Default"
+            HorizontalOptions="FillAndExpand"
+            HorizontalTextAlignment="Center"
+            IsVisible="{Binding IsVisible}"
+            Text="No Results"
+            VerticalOptions="FillAndExpand"
+            VerticalTextAlignment="Center" />
+        <!--<SearchBar SearchButtonPressed="SearchBar_SearchButtonPressed" />
+        <Label
+            x:Name="ResultTxt"
+            FontSize="Medium"
+            HorizontalTextAlignment="Center"
+            TextColor="Black" />
+        <ListView x:Name="ResultLtvw">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <custom:RoundedCornerView
+                            Margin="3"
+                            BorderColor="#E0E2DB"
+                            BorderWidth="1"
+                            RoundedCornerRadius="20">
+                            <Grid BackgroundColor="#E0E2DB">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <StackLayout
+                                    Grid.Column="1"
+                                    Margin="5"
+                                    VerticalOptions="Center">
+                                    <StackLayout Orientation="Horizontal">
+
+                                        <StackLayout Padding="4,0,0,0" Orientation="Vertical">
+
+                                            <Label
+                                                FontAttributes="Bold"
+                                                FontSize="Small"
+                                                Text="{Binding code}"
+                                                TextColor="#191716" />
+                                            <Label
+                                                FontAttributes="Bold"
+                                                FontSize="Small"
+                                                Text="{Binding branch.name}"
+                                                TextColor="#191716" />
+                                            <Label
+                                                FontSize="Small"
+                                                Text="{Binding patient.fullName}"
+                                                TextColor="#191716" />
+                                        </StackLayout>
+                                    </StackLayout>
+                                </StackLayout>
+                            </Grid>
+                        </custom:RoundedCornerView>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        -->
+        <ListView
+            HasUnevenRows="true"
+            IsPullToRefreshEnabled="true"
+            IsRefreshing="{Binding IsRefreshing, Mode=TwoWay}"
+            IsVisible="{Binding Path=IsVisible, Converter={StaticResource visibilityConverter}}"
+            ItemsSource="{Binding Requests}"
+            RefreshCommand="{Binding RefreshCommand}"
+            SeparatorVisibility="None">
+            <ListView.Behaviors>
+                <extended:InfiniteScrollBehavior IsLoadingMore="{Binding IsBusy}" />
+            </ListView.Behaviors>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <ViewCell.ContextActions>
+                            <MenuItem
+                                Clicked="Request_Detail"
+                                CommandParameter="{Binding .}"
+                                IconImageSource="show.png"
+                                Text="Show" />
+                            <!-- <MenuItem
+                                Clicked="MenuItem_Clicked"
+                                CommandParameter="{Binding .}"
+                                IsDestructive="True"
+                                Text="Delete" />-->
+                        </ViewCell.ContextActions>
+                        <custom:RoundedCornerView
+                            Margin="3"
+                            BorderColor="#E0E2DB"
+                            BorderWidth="1"
+                            RoundedCornerRadius="20">
+                            <Grid BackgroundColor="#E0E2DB">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <StackLayout
+                                    Grid.Column="1"
+                                    Margin="5"
+                                    VerticalOptions="Center">
+                                    <StackLayout Orientation="Horizontal">
+
+                                        <StackLayout Orientation="Vertical">
+                                            <Frame
+                                                BackgroundColor="{Binding status.name, Converter={StaticResource BackgroundStatusConverter}}"
+                                                CornerRadius="50"
+                                                HeightRequest="25"
+                                                VerticalOptions="Center"
+                                                WidthRequest="25">
+                                                <Image
+                                                    HeightRequest="20"
+                                                    HorizontalOptions="FillAndExpand"
+                                                    Source="flag.png"
+                                                    VerticalOptions="FillAndExpand"
+                                                    WidthRequest="20" />
+                                            </Frame>
+                                            <Label
+                                                FontAttributes="Bold"
+                                                FontSize="Micro"
+                                                Text="{Binding status.name, Converter={StaticResource StringStatusEnumConverter}}"
+                                                TextColor="#5A5A66" />
+                                        </StackLayout>
+                                        <StackLayout Padding="4,0,0,0" Orientation="Vertical">
+                                            <!--  <Label
+                                                FontAttributes="Bold"
+                                                FontSize="Small"
+                                                Text="{Binding id}"
+                                                TextColor="#191716" />-->
+                                            <Label
+                                                FontAttributes="Bold"
+                                                FontSize="Small"
+                                                Text="{Binding code}"
+                                                TextColor="#191716" />
+                                            <Label
+                                                FontAttributes="Bold"
+                                                FontSize="Small"
+                                                Text="{Binding branch.name}"
+                                                TextColor="#191716" />
+                                            <Label
+                                                FontSize="Small"
+                                                Text="{Binding patient.fullName}"
+                                                TextColor="#191716" />
+                                        </StackLayout>
+                                        <StackLayout
+                                            Padding="10,0,0,0"
+                                            HorizontalOptions="Center"
+                                            Orientation="Vertical"
+                                            VerticalOptions="Center">
+                                            <Label
+                                                FontAttributes="Bold"
+                                                FontSize="Small"
+                                                Text="{Binding checkDate}"
+                                                TextColor="Red" />
+                                        </StackLayout>
+                                    </StackLayout>
+                                </StackLayout>
+                            </Grid>
+                        </custom:RoundedCornerView>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+            <ListView.Footer>
+                <Grid Padding="6" IsVisible="{Binding IsBusy}">
+                    <Grid.Triggers>
+                        <Trigger TargetType="Grid" Property="IsVisible" Value="False">
+                            <Setter Property="HeightRequest" Value="0" />
+                        </Trigger>
+                    </Grid.Triggers>
+                    <Label
+                        FontAttributes="Bold"
+                        FontSize="20"
+                        HorizontalOptions="Center"
+                        Text="Loading..."
+                        TextColor="#246EB9"
+                        VerticalOptions="Center" />
+                </Grid>
+            </ListView.Footer>
+        </ListView>
+    </StackLayout>
+</ContentPage>

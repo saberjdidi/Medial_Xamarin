@@ -1,0 +1,136 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="XamarinApplication.Views.AttachmentsPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:custom="clr-namespace:XamarinApplication;assembly=XamarinApplication"
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+    xmlns:i18n="clr-namespace:XamarinApplication.Helpers"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewModels="clr-namespace:XamarinApplication.ViewModels"
+    mc:Ignorable="d">
+    <ContentPage.BindingContext>
+        <viewModels:AttachmentsViewModel />
+    </ContentPage.BindingContext>
+    <StackLayout Padding="5">
+        <SearchBar
+            BackgroundColor="#A0CCDA"
+            HeightRequest="46"
+            Placeholder="{i18n:Translate Name}"
+            SearchCommand="{Binding SearchCommand}"
+            Text="{Binding Filter, Mode=TwoWay}" />
+        <ListView
+            HasUnevenRows="true"
+            IsPullToRefreshEnabled="true"
+            IsRefreshing="{Binding IsRefreshing, Mode=TwoWay}"
+            ItemsSource="{Binding Attachments}"
+            RefreshCommand="{Binding RefreshCommand}"
+            SeparatorVisibility="None">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <ViewCell.ContextActions>
+                            <MenuItem Text="Show" />
+                            <MenuItem IsDestructive="True" Text="Delete" />
+                        </ViewCell.ContextActions>
+                        <custom:RoundedCornerView
+                            Margin="3"
+                            BorderColor="#E0E2DB"
+                            BorderWidth="1"
+                            RoundedCornerRadius="20">
+                            <Grid BackgroundColor="#E0E2DB">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <StackLayout
+                                    Grid.Column="1"
+                                    Margin="5"
+                                    VerticalOptions="Center">
+                                    <StackLayout Orientation="Horizontal">
+
+                                        <StackLayout Orientation="Vertical">
+                                            <Label
+                                                FontSize="Micro"
+                                                Text="Download"
+                                                TextColor="#BEB7A4" />
+                                        </StackLayout>
+                                        <StackLayout Padding="4,0,0,0" Orientation="Vertical">
+                                            <Label
+                                                FontAttributes="Bold"
+                                                FontSize="Small"
+                                                Text="{Binding name}"
+                                                TextColor="#191716" />
+                                            <Label
+                                                FontAttributes="Bold"
+                                                FontSize="Small"
+                                                Text="{Binding date}"
+                                                TextColor="Red" />
+                                            <Label
+                                                FontAttributes="Bold"
+                                                FontSize="Small"
+                                                Text="{Binding saved}"
+                                                TextColor="#191716" />
+                                        </StackLayout>
+                                    </StackLayout>
+                                    <!--<StackLayout Orientation="Horizontal">
+                                        <Label
+                                            FontAttributes="Bold"
+                                            FontSize="Medium"
+                                            Text="{i18n:Translate Name}"
+                                            TextColor="#FFFFFF"
+                                            WidthRequest="100" />
+                                        <Label
+                                            FontSize="Medium"
+                                            Text="{Binding name}"
+                                            TextColor="#FFFFFF" />
+                                    </StackLayout>
+                                    <StackLayout Orientation="Horizontal">
+                                        <Label
+                                            FontAttributes="Bold"
+                                            FontSize="Medium"
+                                            Text="{i18n:Translate Date}"
+                                            TextColor="#FFFFFF"
+                                            WidthRequest="120" />
+                                        <Label
+                                            FontSize="Medium"
+                                            Text="{Binding date}"
+                                            TextColor="#FFFFFF" />
+                                    </StackLayout>
+                                     <StackLayout Orientation="Horizontal">
+                                        <Label
+                                            FontAttributes="Bold"
+                                            FontSize="Medium"
+                                            Text="Licence:"
+                                            TextColor="#FFFFFF"
+                                            WidthRequest="100" />
+                                        <Label
+                                            FontSize="Medium"
+                                            Text="{Binding licence.number}"
+                                            TextColor="#FFFFFF" />
+                                    </StackLayout>-->
+                                </StackLayout>
+                            </Grid>
+                        </custom:RoundedCornerView>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+        <!--<AbsoluteLayout>
+            <Frame
+                Margin="6"
+                AbsoluteLayout.LayoutBounds="1,1,-1,-1"
+                AbsoluteLayout.LayoutFlags="PositionProportional"
+                BackgroundColor="Blue"
+                CornerRadius="50"
+                HasShadow="True">
+                <Image Source="add.png" />
+                <Frame.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="Add_Gim" />
+                </Frame.GestureRecognizers>
+            </Frame>
+        </AbsoluteLayout>-->
+    </StackLayout>
+</ContentPage>

@@ -1,0 +1,179 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="XamarinApplication.Views.CalendarEventsPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:convert="clr-namespace:XamarinApplication.Converters;assembly=XamarinApplication"
+    xmlns:custom="clr-namespace:XamarinApplication;assembly=XamarinApplication"
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+    xmlns:local="clr-namespace:XamarinApplication.ViewModels"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:pv="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+    xmlns:syncfusion="clr-namespace:Syncfusion.SfCalendar.XForms;assembly=Syncfusion.SfCalendar.XForms"
+    Title="{Binding Client.description}"
+    mc:Ignorable="d">
+    <ContentPage.ToolbarItems>
+        <!-- <ToolbarItem Command="{Binding AddEvent}" IconImageSource="add" />-->
+        <ToolbarItem
+            Command="{Binding DownloadPdf}"
+            IconImageSource="pdf"
+            IsEnabled="{Binding Enabled}" />
+        <ToolbarItem
+            Command="{Binding DownloadExcel}"
+            IconImageSource="excel"
+            IsEnabled="{Binding Enabled}" />
+    </ContentPage.ToolbarItems>
+    <ContentPage.BindingContext>
+        <local:CalendarEventsViewModel />
+    </ContentPage.BindingContext>
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <convert:TimeStampToDate x:Key="TimeStampToDate" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <syncfusion:SfCalendar
+                x:Name="calendar"
+                DataSource="{Binding CalendarInlineEvents}"
+                FirstDayofWeek="1"
+                InlineViewMode="Inline"
+                MaximumEventIndicatorCount="1"
+                ShowInlineEvents="true"
+                ViewMode="MonthView" />
+            <!--  menu items  -->
+            <pv:PancakeView
+                Grid.Row="0"
+                Margin="30"
+                Padding="15"
+                CornerRadius="40"
+                HorizontalOptions="End"
+                VerticalOptions="End">
+                <pv:PancakeView.BackgroundGradientStops>
+                    <pv:GradientStopCollection>
+                        <pv:GradientStop Offset="0" Color="#70B8FF" />
+                        <pv:GradientStop Offset="1" Color="#007FFF" />
+                    </pv:GradientStopCollection>
+                </pv:PancakeView.BackgroundGradientStops>
+                <Expander
+                    HorizontalOptions="Start"
+                    Rotation="180"
+                    VerticalOptions="End">
+                    <Expander.Header>
+                        <Image
+                            HeightRequest="30"
+                            Rotation="180"
+                            Source="add_white.png"
+                            WidthRequest="30">
+                            <Image.Triggers>
+                                <DataTrigger
+                                    Binding="{Binding Source={RelativeSource AncestorType={x:Type Expander}}, Path=IsExpanded}"
+                                    TargetType="Image"
+                                    Value="True">
+                                    <Setter Property="Source" Value="closee.png" />
+                                </DataTrigger>
+                            </Image.Triggers>
+                        </Image>
+                    </Expander.Header>
+                    <StackLayout Margin="0,20" Spacing="30">
+                        <ImageButton
+                            BackgroundColor="Transparent"
+                            Command="{Binding AddEvent}"
+                            HeightRequest="30"
+                            Rotation="180"
+                            Source="add.png"
+                            WidthRequest="30" />
+                        <Label
+                            FontAttributes="Bold"
+                            Rotation="180"
+                            Text="References"
+                            TextColor="White">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding Refrerences}" />
+                            </Label.GestureRecognizers>
+                        </Label>
+                        <Label
+                            FontAttributes="Bold"
+                            Rotation="180"
+                            Text="Report"
+                            TextColor="White">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding Reports}" />
+                            </Label.GestureRecognizers>
+                        </Label>
+                        <Label
+                            FontAttributes="Bold"
+                            Rotation="180"
+                            Text="Agents"
+                            TextColor="White">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding Agents}" />
+                            </Label.GestureRecognizers>
+                        </Label>
+                    </StackLayout>
+                </Expander>
+            </pv:PancakeView>
+        </Grid>
+        <!--
+        <syncfusion:SfSchedule
+            x:Name="schedule"
+            DataSource="{Binding EventCollection}"
+            ScheduleView="DayView">
+            <syncfusion:SfSchedule.AppointmentMapping>
+                <syncfusion:ScheduleAppointmentMapping
+                    ColorMapping="Color"
+                    EndTimeMapping="{Binding endsAt, Converter={StaticResource TimeStampToDate}}"
+                    StartTimeMapping="{Binding startsAt, Converter={StaticResource TimeStampToDate}}"
+                    SubjectMapping="{Binding title}" />
+            </syncfusion:SfSchedule.AppointmentMapping>
+        </syncfusion:SfSchedule>
+          <ListView
+            HasUnevenRows="true"
+            ItemsSource="{Binding EventCollection}"
+            SeparatorVisibility="Default">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <custom:RoundedCornerView
+                            Margin="5"
+                            BorderWidth="2"
+                            RoundedCornerRadius="1">
+                            <Grid BackgroundColor="#609AE0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <StackLayout
+                                    Grid.Column="1"
+                                    Margin="5"
+                                    Padding="20,0,0,0"
+                                    Orientation="Vertical"
+                                    VerticalOptions="Center">
+                                    <Label
+                                        FontAttributes="Bold"
+                                        FontFamily="Arial, Helvetica, sans-serif"
+                                        FontSize="18"
+                                        Text="{Binding title}"
+                                        TextColor="#FFFFFF" />
+                                    <Label
+                                        FontSize="16"
+                                        Text="{Binding startsAt, Converter={StaticResource TimeStampToDate}}"
+                                        TextColor="#C6DEC6" />
+                                    <Label
+                                        FontSize="14"
+                                        Text="{Binding endsAt, Converter={StaticResource TimeStampToDate}}"
+                                        TextColor="#808F87" />
+
+                                </StackLayout>
+                            </Grid>
+                        </custom:RoundedCornerView>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>-->
+    </ContentPage.Content>
+</ContentPage>

@@ -1,0 +1,118 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="XamarinApplication.Views.ReportsPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:custom="clr-namespace:XamarinApplication;assembly=XamarinApplication"
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+    xmlns:local="clr-namespace:XamarinApplication.Converters;assembly=XamarinApplication"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewModels="clr-namespace:XamarinApplication.ViewModels"
+    mc:Ignorable="d">
+    <ContentPage.BindingContext>
+        <viewModels:ReportsViewModel />
+    </ContentPage.BindingContext>
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <local:VisibilityConverter x:Key="visibilityConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <!--<Button
+                x:Name="ItemSource"
+                Grid.Row="0"
+                Command="{Binding ChangeItemsSource}"
+                HorizontalOptions="CenterAndExpand"
+                Text="Change ItemSource"
+                VerticalOptions="CenterAndExpand" />-->
+            <Grid Grid.Row="0" IsVisible="{Binding IsVisible}">
+                <Label
+                    x:Name="label"
+                    FontSize="Default"
+                    HorizontalOptions="FillAndExpand"
+                    HorizontalTextAlignment="Center"
+                    Text="No Results"
+                    VerticalOptions="FillAndExpand"
+                    VerticalTextAlignment="Center" />
+            </Grid>
+            <ListView
+                Grid.Row="0"
+                HasUnevenRows="true"
+                IsPullToRefreshEnabled="true"
+                IsRefreshing="{Binding IsRefreshing, Mode=TwoWay}"
+                IsVisible="{Binding Path=IsVisible, Converter={StaticResource visibilityConverter}}"
+                ItemsSource="{Binding Reports}"
+                RefreshCommand="{Binding RefreshCommand}"
+                SeparatorVisibility="None">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <custom:RoundedCornerView
+                                Margin="3"
+                                BorderColor="#E0E2DB"
+                                BorderWidth="1"
+                                RoundedCornerRadius="20">
+                                <Grid BackgroundColor="#E0E2DB">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <StackLayout
+                                        Grid.Column="1"
+                                        Margin="5"
+                                        VerticalOptions="Center">
+                                        <StackLayout Orientation="Horizontal">
+                                            <Label
+                                                FontAttributes="Bold"
+                                                FontSize="Medium"
+                                                Text="Sending Date"
+                                                TextColor="#191716"
+                                                WidthRequest="100" />
+                                            <Label
+                                                FontAttributes="Bold"
+                                                FontSize="Medium"
+                                                Text="{Binding sendingDate}"
+                                                TextColor="#191716" />
+                                        </StackLayout>
+                                        <StackLayout Orientation="Horizontal">
+                                            <Label
+                                                FontAttributes="Bold"
+                                                FontSize="Medium"
+                                                Text="flState"
+                                                TextColor="#191716"
+                                                WidthRequest="100" />
+                                            <Label
+                                                FontAttributes="Bold"
+                                                FontSize="Medium"
+                                                Text="{Binding flState}"
+                                                TextColor="#191716" />
+                                        </StackLayout>
+                                        <StackLayout Orientation="Horizontal">
+                                            <Label
+                                                FontAttributes="Bold"
+                                                FontSize="Medium"
+                                                Text="note"
+                                                TextColor="#191716"
+                                                WidthRequest="100" />
+                                            <Label
+                                                FontAttributes="Bold"
+                                                FontSize="Medium"
+                                                Text="{Binding note}"
+                                                TextColor="#191716" />
+                                        </StackLayout>
+                                    </StackLayout>
+                                </Grid>
+                            </custom:RoundedCornerView>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

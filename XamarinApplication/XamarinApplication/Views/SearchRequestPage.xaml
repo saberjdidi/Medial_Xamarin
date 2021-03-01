@@ -1,0 +1,250 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<pages:PopupPage
+    x:Class="XamarinApplication.Views.SearchRequestPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:animations="clr-namespace:Rg.Plugins.Popup.Animations;assembly=Rg.Plugins.Popup"
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+    xmlns:local="clr-namespace:XamarinApplication.Converters;assembly=XamarinApplication"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+    mc:Ignorable="d">
+    <pages:PopupPage.Animation>
+        <animations:ScaleAnimation
+            DurationIn="400"
+            DurationOut="300"
+            EasingIn="SinOut"
+            EasingOut="SinIn"
+            HasBackgroundAnimation="True"
+            PositionIn="Top"
+            PositionOut="Top"
+            ScaleIn="1.2"
+            ScaleOut="0.8" />
+    </pages:PopupPage.Animation>
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <local:StringStatusConverter x:Key="StringStatusEnumConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <StackLayout
+        Padding="10,50,2,2"
+        HorizontalOptions="StartAndExpand"
+        VerticalOptions="StartAndExpand">
+        <Frame
+            Margin="5"
+            BackgroundColor="#FDFFFC"
+            BorderColor="#FDFFFC"
+            HasShadow="true">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Label
+                    Grid.Row="0"
+                    FontSize="16"
+                    Text="CheckDate"
+                    TextColor="Black" />
+                <StackLayout Grid.Row="1" Orientation="Horizontal">
+                    <local:DatePickerCtrl
+                        Grid.Column="0"
+                        Date="{Binding CheckDateFrom}"
+                        HeightRequest="40"
+                        HorizontalOptions="FillAndExpand"
+                        Placeholder="From"
+                        WidthRequest="100" />
+                    <local:DatePickerCtrl
+                        Grid.Column="1"
+                        Date="{Binding CheckDateTo}"
+                        HeightRequest="40"
+                        HorizontalOptions="FillAndExpand"
+                        Placeholder="To"
+                        WidthRequest="100" />
+                </StackLayout>
+                <!--<StackLayout
+                    Grid.Row="1"
+                    HorizontalOptions="CenterAndExpand"
+                    Orientation="Horizontal">
+
+                    <Frame Grid.Column="0" BackgroundColor="#508CA4">
+
+                        <StackLayout HorizontalOptions="CenterAndExpand" Orientation="Horizontal">
+                            <Label Text="From" />
+                            <Image
+                                HeightRequest="15"
+                                Source="ic_alarm_white_24dp.png"
+                                WidthRequest="15" />
+
+                            <DatePicker
+                                Date="{Binding CheckDateFrom}"
+                                Format="MM/dd/yyyy"
+                                MinimumDate="12/01/2019"
+                                TextColor="#F7FFF6"
+                                WidthRequest="100" />
+                        </StackLayout>
+                    </Frame>
+                    <Frame Grid.Column="1" BackgroundColor="#508CA4">
+                        <StackLayout HorizontalOptions="CenterAndExpand" Orientation="Horizontal">
+                            <Label Text="To" />
+                            <Image
+                                HeightRequest="15"
+                                Source="ic_alarm_white_24dp.png"
+                                WidthRequest="15" />
+
+                            <DatePicker
+                                Date="{Binding CheckDateTo}"
+                                Format="MM/dd/yyyy"
+                                MinimumDate="12/01/2019"
+                                TextColor="#F7FFF6"
+                                WidthRequest="100" />
+                        </StackLayout>
+                    </Frame>
+                </StackLayout>-->
+                <StackLayout
+                    Grid.Row="2"
+                    HorizontalOptions="CenterAndExpand"
+                    Orientation="Horizontal">
+
+                    <Label
+                        Grid.Column="0"
+                        FontSize="16"
+                        Text="Status"
+                        TextColor="Black" />
+                    <Picker
+                        Title="--Please Select Status--"
+                        Grid.Column="1"
+                        FontSize="14"
+                        ItemDisplayBinding="{Binding name, Converter={StaticResource StringStatusEnumConverter}}"
+                        ItemsSource="{Binding StatusList}"
+                        SelectedItem="{Binding SelectedStatus}"
+                        TextColor="#5A5A66"
+                        WidthRequest="150" />
+                    <!-- <Picker
+                        x:Name="StatusPicker"
+                        Grid.Column="2"
+                        HorizontalOptions="FillAndExpand">
+                        <Picker.Items>
+                            <x:String>CH</x:String>
+                            <x:String>SV</x:String>
+                            <x:String>SE</x:String>
+                            <x:String>TC</x:String>
+                            <x:String>VL</x:String>
+                        </Picker.Items>
+                    </Picker>-->
+                </StackLayout>
+                <!--<StackLayout
+                    Grid.Row="2"
+                    HorizontalOptions="CenterAndExpand"
+                    Orientation="Horizontal">
+                    <Label
+                        Grid.Column="0"
+                        FontSize="16"
+                        Text="Patient"
+                        TextColor="Black" />
+                    <Entry
+                        Grid.Column="1"
+                        FontSize="14"
+                        Placeholder="Firstname, Lastname"
+                        Text="{Binding Patient}"
+                        TextColor="#5A5A66"
+                        WidthRequest="150" />
+                </StackLayout>
+                <StackLayout
+                    Grid.Row="3"
+                    HorizontalOptions="CenterAndExpand"
+                    Orientation="Horizontal">
+                    <Label
+                        Grid.Column="0"
+                        FontSize="16"
+                        Text="Client"
+                        TextColor="Black" />
+                    <Entry
+                        Grid.Column="1"
+                        FontSize="14"
+                        Placeholder="Client"
+                        Text="{Binding Client}"
+                        TextColor="#5A5A66"
+                        WidthRequest="150" />
+                </StackLayout>-->
+                <StackLayout Grid.Row="3" Padding="30,0,0,0">
+                    <Button
+                        BackgroundColor="#B29DB7"
+                        Command="{Binding SearchCommand}"
+                        CornerRadius="30"
+                        HorizontalOptions="CenterAndExpand"
+                        Text="Search"
+                        TextColor="White"
+                        WidthRequest="140" />
+
+                </StackLayout>
+                <!--<ListView
+                    Grid.Row="4"
+                    HasUnevenRows="true"
+                    ItemsSource="{Binding Requests}"
+                    SeparatorVisibility="None">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+
+                                <Grid BackgroundColor="#E0E2DB">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <StackLayout
+                                        Grid.Column="1"
+                                        Margin="5"
+                                        VerticalOptions="Center">
+                                        <StackLayout Orientation="Horizontal">
+
+                                            <StackLayout Orientation="Vertical">
+                                                <Label
+                                                    FontAttributes="Bold"
+                                                    FontSize="Micro"
+                                                    Text="{Binding status.name, Converter={StaticResource StringStatusEnumConverter}}"
+                                                    TextColor="#5A5A66" />
+                                            </StackLayout>
+                                            <StackLayout Padding="4,0,0,0" Orientation="Vertical">
+                                                <Label
+                                                    FontAttributes="Bold"
+                                                    FontSize="Small"
+                                                    Text="{Binding code}"
+                                                    TextColor="#191716" />
+                                                <Label
+                                                    FontAttributes="Bold"
+                                                    FontSize="Small"
+                                                    Text="{Binding branch.name}"
+                                                    TextColor="#191716" />
+                                                <Label
+                                                    FontSize="Small"
+                                                    Text="{Binding patient.fullName}"
+                                                    TextColor="#191716" />
+                                            </StackLayout>
+                                            <StackLayout
+                                                Padding="10,0,0,0"
+                                                HorizontalOptions="Center"
+                                                Orientation="Vertical"
+                                                VerticalOptions="Center">
+                                                <Label
+                                                    FontAttributes="Bold"
+                                                    FontSize="Small"
+                                                    Text="{Binding checkDate}"
+                                                    TextColor="Red" />
+                                            </StackLayout>
+                                        </StackLayout>
+                                    </StackLayout>
+                                </Grid>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>-->
+
+            </Grid>
+        </Frame>
+    </StackLayout>
+</pages:PopupPage>

@@ -1,0 +1,257 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="XamarinApplication.Views.ProductsPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:custom="clr-namespace:XamarinApplication;assembly=XamarinApplication"
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+    xmlns:extended="clr-namespace:Xamarin.Forms.Extended;assembly=Xamarin.Forms.Extended.InfiniteScrolling"
+    xmlns:i18n="clr-namespace:XamarinApplication.Helpers"
+    xmlns:local="clr-namespace:XamarinApplication.Converters;assembly=XamarinApplication"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:pv="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+    xmlns:viewModels="clr-namespace:XamarinApplication.ViewModels"
+    Title="{i18n:Translate Products}"
+    mc:Ignorable="d">
+    <!-- <ContentPage.BindingContext>
+        <viewModels:ProductsViewModel />
+    </ContentPage.BindingContext>-->
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <local:VisibilityConverter x:Key="visibilityConverter" />
+            <local:BackgroundColorConverter x:Key="BackgroundAvailabilityConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <!-- <ContentPage.ToolbarItems>
+        <ToolbarItem Command="{Binding SearchPopup}" IconImageSource="ic_search_white_24dp" />
+         <ToolbarItem Clicked="Add_Product" IconImageSource="add" />
+        <ToolbarItem Clicked="Show_Price" IconImageSource="chrome_reader" />
+    </ContentPage.ToolbarItems>-->
+    <Grid
+        BackgroundColor="White"
+        HorizontalOptions="FillAndExpand"
+        RowSpacing="0"
+        VerticalOptions="FillAndExpand">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <!-- <custom:RoundedCornerView BorderWidth="1" RoundedCornerRadius="25">
+            <SearchBar
+                BackgroundColor="#A0CCDA"
+                HeightRequest="46"
+                IsVisible="{Binding ShowHide}"
+                Placeholder="{i18n:Translate Supplier}"
+                SearchCommand="{Binding SearchCommand}"
+                Text="{Binding Filter, Mode=TwoWay}" />
+        </custom:RoundedCornerView>-->
+        <Label
+            x:Name="label"
+            Grid.Row="2"
+            FontSize="24"
+            HorizontalOptions="FillAndExpand"
+            HorizontalTextAlignment="Center"
+            IsVisible="{Binding IsVisible}"
+            Text="No Results"
+            VerticalOptions="FillAndExpand"
+            VerticalTextAlignment="Center" />
+        <ListView
+            Grid.Row="2"
+            CachingStrategy="RecycleElement"
+            HasUnevenRows="true"
+            IsPullToRefreshEnabled="true"
+            IsRefreshing="{Binding IsRefreshing, Mode=TwoWay}"
+            IsVisible="{Binding Path=IsVisible, Converter={StaticResource visibilityConverter}}"
+            ItemAppearing="ListView_ItemAppearing"
+            ItemsSource="{Binding ProductsCollection}"
+            RefreshCommand="{Binding RefreshCommand}"
+            SeparatorColor="Gray"
+            SeparatorVisibility="Default">
+            <ListView.Behaviors>
+                <extended:InfiniteScrollBehavior IsLoadingMore="{Binding IsBusy}" />
+            </ListView.Behaviors>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <ViewCell.ContextActions>
+                            <MenuItem
+                                Command="{Binding DeleteCommand}"
+                                IconImageSource="trash.png"
+                                IsDestructive="true"
+                                Text="Delete" />
+                            <MenuItem
+                                Clicked="Update_Product"
+                                CommandParameter="{Binding .}"
+                                IconImageSource="edit.png"
+                                Text="Edit" />
+                            <MenuItem
+                                Clicked="Product_Detail"
+                                CommandParameter="{Binding .}"
+                                IconImageSource="show.png"
+                                Text="Show" />
+                            <MenuItem
+                                Clicked="Component_Product"
+                                CommandParameter="{Binding .}"
+                                IconImageSource="category.png"
+                                Text="Component" />
+                        </ViewCell.ContextActions>
+                        <custom:RoundedCornerView
+                            Margin="3"
+                            BorderWidth="1"
+                            RoundedCornerRadius="45">
+                            <Grid BackgroundColor="{Binding availability, Converter={StaticResource BackgroundAvailabilityConverter}}">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <StackLayout
+                                    Grid.Column="1"
+                                    Margin="5"
+                                    Padding="20,0,0,0"
+                                    Orientation="Vertical"
+                                    VerticalOptions="Center">
+                                    <Label
+                                        FontAttributes="Bold"
+                                        FontFamily="Arial, Helvetica, sans-serif"
+                                        FontSize="18"
+                                        Text="{Binding code}"
+                                        TextColor="#FFFFFF" />
+                                    <Label
+                                        FontAttributes="Italic"
+                                        FontSize="16"
+                                        Text="{Binding description}"
+                                        TextColor="#C6DEC6" />
+                                    <Label
+                                        FontFamily="Times New Roman"
+                                        FontSize="13"
+                                        Text="{Binding supplier.description}"
+                                        TextColor="#4C4C47" />
+                                    <!--
+                                    <StackLayout Orientation="Horizontal">
+                                        <Label
+                                            FontAttributes="Bold"
+                                            FontSize="16"
+                                            Text="{i18n:Translate Code}"
+                                            TextColor="#FFFFFF"
+                                            WidthRequest="100" />
+                                        <Label
+                                            FontAttributes="Bold"
+                                            FontSize="14"
+                                            Text="{Binding code}"
+                                            TextColor="#FFFFFF" />
+                                    </StackLayout>
+                                    <StackLayout Orientation="Horizontal">
+                                        <Label
+                                            FontAttributes="Bold"
+                                            FontSize="16"
+                                            Text="{i18n:Translate Description}"
+                                            TextColor="#FFFFFF"
+                                            WidthRequest="120" />
+                                        <Label
+                                            FontSize="14"
+                                            Text="{Binding description}"
+                                            TextColor="#FFFFFF" />
+                                    </StackLayout>
+                                    <StackLayout Orientation="Horizontal">
+                                        <Label
+                                            FontAttributes="Bold"
+                                            FontSize="16"
+                                            Text="Supplier"
+                                            TextColor="#FFFFFF"
+                                            WidthRequest="100" />
+                                        <Label
+                                            FontSize="14"
+                                            Text="{Binding supplier.description}"
+                                            TextColor="#FFFFFF" />
+                                    </StackLayout>
+                                    -->
+                                </StackLayout>
+                            </Grid>
+                        </custom:RoundedCornerView>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+            <ListView.Footer>
+                <Grid Padding="6" IsVisible="{Binding IsBusy}">
+                    <Grid.Triggers>
+                        <Trigger TargetType="Grid" Property="IsVisible" Value="False">
+                            <Setter Property="HeightRequest" Value="0" />
+                        </Trigger>
+                    </Grid.Triggers>
+                    <Label
+                        FontAttributes="Bold"
+                        FontSize="20"
+                        HorizontalOptions="Center"
+                        Text="{i18n:Translate Loading}"
+                        TextColor="#246EB9"
+                        VerticalOptions="Center" />
+                    <!--<Image
+                        HorizontalOptions="Center"
+                        Source="progress.gif"
+                        VerticalOptions="Center" />-->
+                </Grid>
+            </ListView.Footer>
+        </ListView>
+        <!--  menu items  -->
+        <pv:PancakeView
+            Grid.Row="2"
+            Margin="30"
+            Padding="15"
+            CornerRadius="40"
+            HorizontalOptions="End"
+            VerticalOptions="End">
+            <pv:PancakeView.BackgroundGradientStops>
+                <pv:GradientStopCollection>
+                    <pv:GradientStop Offset="0" Color="#70B8FF" />
+                    <pv:GradientStop Offset="1" Color="#007FFF" />
+                </pv:GradientStopCollection>
+            </pv:PancakeView.BackgroundGradientStops>
+            <Expander
+                HorizontalOptions="Start"
+                Rotation="180"
+                VerticalOptions="End">
+                <Expander.Header>
+                    <Image
+                        HeightRequest="30"
+                        Rotation="180"
+                        Source="add_white.png"
+                        WidthRequest="30">
+                        <Image.Triggers>
+                            <DataTrigger
+                                Binding="{Binding Source={RelativeSource AncestorType={x:Type Expander}}, Path=IsExpanded}"
+                                TargetType="Image"
+                                Value="True">
+                                <Setter Property="Source" Value="closee.png" />
+                            </DataTrigger>
+                        </Image.Triggers>
+                    </Image>
+                </Expander.Header>
+                <StackLayout Margin="0,20" Spacing="30">
+                    <ImageButton
+                        BackgroundColor="Transparent"
+                        Clicked="Add_Product"
+                        HeightRequest="30"
+                        Rotation="180"
+                        Source="add.png"
+                        WidthRequest="30" />
+                    <ImageButton
+                        BackgroundColor="Transparent"
+                        Clicked="Show_Price"
+                        HeightRequest="30"
+                        Rotation="180"
+                        Source="chrome_reader"
+                        WidthRequest="30" />
+                    <ImageButton
+                        BackgroundColor="Transparent"
+                        Command="{Binding SearchPopup}"
+                        HeightRequest="30"
+                        Rotation="180"
+                        Source="ic_search_white_24dp.png"
+                        WidthRequest="30" />
+                </StackLayout>
+            </Expander>
+        </pv:PancakeView>
+    </Grid>
+</ContentPage>

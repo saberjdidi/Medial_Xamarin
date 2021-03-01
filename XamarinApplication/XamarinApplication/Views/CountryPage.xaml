@@ -1,0 +1,116 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="XamarinApplication.Views.CountryPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:custom="clr-namespace:XamarinApplication"
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+    xmlns:i18n="clr-namespace:XamarinApplication.Helpers"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="{i18n:Translate Country}"
+    Background="LightGray"
+    mc:Ignorable="d">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem
+            Command="{Binding OpenSearchBar}"
+            IconImageSource="ic_search_white_24dp"
+            Text="{Binding ShowHide}" />
+    </ContentPage.ToolbarItems>
+    <StackLayout Padding="5">
+        <custom:RoundedCornerView BorderWidth="1" RoundedCornerRadius="25">
+            <SearchBar
+                BackgroundColor="White"
+                HeightRequest="46"
+                IsVisible="{Binding ShowHide}"
+                Placeholder="{i18n:Translate Search}"
+                SearchCommand="{Binding SearchCommand}"
+                Text="{Binding Filter, Mode=TwoWay}" />
+        </custom:RoundedCornerView>
+        <Label
+            FontSize="24"
+            HorizontalOptions="FillAndExpand"
+            HorizontalTextAlignment="Center"
+            IsVisible="{Binding IsVisibleStatus}"
+            Text="{i18n:Translate NoResult}"
+            TextColor="Black"
+            VerticalOptions="FillAndExpand"
+            VerticalTextAlignment="Center" />
+        <RefreshView Command="{Binding RefreshCommand}" IsRefreshing="{Binding IsRefreshing}">
+            <CollectionView
+                Margin="10,3,10,10"
+                HorizontalOptions="FillAndExpand"
+                ItemsSource="{Binding Country}"
+                SelectionMode="None"
+                VerticalOptions="FillAndExpand">
+                <CollectionView.Header>
+                    <Label
+                        FontAttributes="Bold"
+                        FontSize="18"
+                        Text="{i18n:Translate Country}"
+                        TextColor="Black" />
+                </CollectionView.Header>
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout ItemSpacing="20" Orientation="Vertical" />
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame
+                            Padding="0"
+                            BackgroundColor="Transparent"
+                            HasShadow="True"
+                            HorizontalOptions="FillAndExpand"
+                            VerticalOptions="StartAndExpand">
+                            <Grid HorizontalOptions="FillAndExpand" VerticalOptions="StartAndExpand">
+
+                                <Grid BackgroundColor="White" HorizontalOptions="FillAndExpand">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="3*" />
+                                    </Grid.ColumnDefinitions>
+                                    <BoxView BackgroundColor="#A0A4C9" Opacity="0.2" />
+                                    <StackLayout HorizontalOptions="Center" VerticalOptions="Center">
+                                        <Label
+                                            FontAttributes="Bold"
+                                            FontSize="13"
+                                            HorizontalOptions="Center"
+                                            Text="{Binding iso}"
+                                            TextColor="#6670CC" />
+                                        <Label
+                                            Margin="0,-10,0,0"
+                                            FontAttributes="Bold"
+                                            FontSize="22"
+                                            HorizontalOptions="Center"
+                                            Text="{Binding iso3}"
+                                            TextColor="#FF5151" />
+                                    </StackLayout>
+                                    <StackLayout
+                                        Grid.Column="1"
+                                        Margin="20"
+                                        HorizontalOptions="Start"
+                                        VerticalOptions="Center">
+                                        <Label
+                                            FontSize="15"
+                                            Text="{Binding name}"
+                                            TextColor="Black" />
+                                        <Label
+                                            Margin="0,-5,0,0"
+                                            FontSize="12"
+                                            Opacity="0.85"
+                                            Text="{Binding niceName}"
+                                            TextColor="Black" />
+                                        <Label
+                                            Margin="0,-5,0,0"
+                                            FontSize="12"
+                                            Opacity="0.5"
+                                            Text="{Binding numCode}"
+                                            TextColor="Black" />
+                                    </StackLayout>
+                                </Grid>
+                            </Grid>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </RefreshView>
+    </StackLayout>
+</ContentPage>

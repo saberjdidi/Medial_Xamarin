@@ -1,0 +1,199 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<pages:PopupPage
+    x:Class="XamarinApplication.Views.RequestDetailPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:animations="clr-namespace:Rg.Plugins.Popup.Animations;assembly=Rg.Plugins.Popup"
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+    xmlns:local="clr-namespace:XamarinApplication.Converters"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+    mc:Ignorable="d">
+    <pages:PopupPage.Animation>
+        <animations:ScaleAnimation
+            DurationIn="400"
+            DurationOut="300"
+            EasingIn="SinOut"
+            EasingOut="SinIn"
+            HasBackgroundAnimation="True"
+            PositionIn="Center"
+            PositionOut="Center"
+            ScaleIn="1.2"
+            ScaleOut="0.8" />
+    </pages:PopupPage.Animation>
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <local:BackgroundColorConverter x:Key="BackgroundStatusConverter" />
+            <local:StringStatusConverter x:Key="StringStatusEnumConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <StackLayout
+        Padding="10,10,10,10"
+        HorizontalOptions="Center"
+        VerticalOptions="Center">
+        <ScrollView Orientation="Vertical">
+            <Frame
+                Margin="2"
+                BackgroundColor="#FDFFFC"
+                BorderColor="#FDFFFC"
+                HasShadow="true">
+
+                <StackLayout>
+                    <Label
+                        Margin="5,5,5,10"
+                        FontAttributes="Bold"
+                        FontSize="Large"
+                        HorizontalOptions="Center"
+                        Text="Request Detail"
+                        TextColor="Black" />
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="100" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Label
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            FontAttributes="Bold"
+                            Text="Status"
+                            TextColor="#118AB2" />
+                        <StackLayout
+                            Grid.Row="0"
+                            Grid.Column="1"
+                            Orientation="Horizontal">
+                            <Label Text="{Binding Request.status.name, Converter={StaticResource StringStatusEnumConverter}}" TextColor="Black" />
+                            <Frame
+                                Margin="60,0,0,0"
+                                BackgroundColor="{Binding Request.status.name, Converter={StaticResource BackgroundStatusConverter}}"
+                                HeightRequest="15"
+                                VerticalOptions="Center"
+                                WidthRequest="15">
+                                <Image
+                                    HeightRequest="15"
+                                    HorizontalOptions="FillAndExpand"
+                                    Source="flag.png"
+                                    VerticalOptions="FillAndExpand"
+                                    WidthRequest="15" />
+                            </Frame>
+                        </StackLayout>
+                        <Label
+                            Grid.Row="1"
+                            Grid.Column="0"
+                            FontAttributes="Bold"
+                            Text="Code"
+                            TextColor="#118AB2" />
+                        <Label
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            Text="{Binding Request.code}"
+                            TextColor="Black" />
+                        <Label
+                            Grid.Row="2"
+                            Grid.Column="0"
+                            FontAttributes="Bold"
+                            Text="Branch"
+                            TextColor="#118AB2" />
+                        <Label
+                            Grid.Row="2"
+                            Grid.Column="1"
+                            Text="{Binding Request.branch.name}"
+                            TextColor="Black" />
+                        <Label
+                            Grid.Row="3"
+                            Grid.Column="0"
+                            FontAttributes="Bold"
+                            Text="Patient"
+                            TextColor="#118AB2" />
+                        <Label
+                            Grid.Row="3"
+                            Grid.Column="1"
+                            Text="{Binding Request.patient.fullName}"
+                            TextColor="Black" />
+
+                        <Label
+                            Grid.Row="4"
+                            Grid.Column="0"
+                            FontAttributes="Bold"
+                            Text="Client"
+                            TextColor="#118AB2" />
+                        <Label
+                            Grid.Row="4"
+                            Grid.Column="1"
+                            Text="{Binding Request.client.companyName}"
+                            TextColor="Black" />
+                        <Label
+                            Grid.Row="5"
+                            Grid.Column="0"
+                            FontAttributes="Bold"
+                            Text="Nomenclature"
+                            TextColor="#118AB2" />
+                        <Label
+                            Grid.Row="5"
+                            Grid.Column="1"
+                            Text="{Binding Request.nomenclatura.descrEsameProf}"
+                            TextColor="Black" />
+                        <Label
+                            Grid.Row="6"
+                            Grid.Column="0"
+                            FontAttributes="Bold"
+                            Text="Date"
+                            TextColor="#118AB2" />
+                        <Label
+                            Grid.Row="6"
+                            Grid.Column="1"
+                            Text="{Binding Request.checkDate}"
+                            TextColor="Black" />
+
+                        <StackLayout Grid.Row="7" VerticalOptions="FillAndExpand">
+                            <Button
+                                Grid.Row="7"
+                                BackgroundColor="#118AB2"
+                                Clicked="Close_Popup_Request"
+                                CornerRadius="10"
+                                HorizontalOptions="CenterAndExpand"
+                                ImageSource="icon_back.png"
+                                Text="Back"
+                                TextColor="#090C9B"
+                                WidthRequest="140" />
+                        </StackLayout>
+                        <!-- <Label
+                        Grid.Row="7"
+                        Grid.Column="0"
+                        FontAttributes="Bold"
+                        Text="Reference Person"
+                        TextColor="Black" />
+                <Label
+                        Grid.Row="7"
+                        Grid.Column="1"
+                        Text="{Binding Gim.ReferencePerson}"
+                        TextColor="Black" />
+
+                    <Label
+                        Grid.Row="8"
+                        Grid.Column="0"
+                        FontAttributes="Bold"
+                        Text="Delivery Date"
+                        TextColor="Black" />
+                    <Label
+                        Grid.Row="8"
+                        Grid.Column="1"
+                        Text="{Binding Gim.DeliveryDate}"
+                        TextColor="Black" />
+                    <Label
+                        Grid.Row="9"
+                        Grid.Column="0"
+                        FontAttributes="Bold"
+                        Text="Activation Date"
+                        TextColor="Black" />
+                    <Label
+                        Grid.Row="9"
+                        Grid.Column="1"
+                        Text="{Binding Gim.ActivationDate}"
+                        TextColor="Black" />-->
+
+                    </Grid>
+                </StackLayout>
+            </Frame>
+        </ScrollView>
+    </StackLayout>
+</pages:PopupPage>

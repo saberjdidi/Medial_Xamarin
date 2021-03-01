@@ -1,0 +1,331 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="XamarinApplication.Views.ProvincePage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:custom="clr-namespace:XamarinApplication"
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+    xmlns:i18n="clr-namespace:XamarinApplication.Helpers"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:pv="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+    Title="{i18n:Translate Province}"
+    mc:Ignorable="d">
+    <ContentPage.ToolbarItems>
+        <!-- <ToolbarItem Clicked="Add_Province" IconImageSource="add" />-->
+        <ToolbarItem
+            Command="{Binding OpenSearchBar}"
+            IconImageSource="ic_search_white_24dp"
+            Text="{Binding ShowHide}" />
+    </ContentPage.ToolbarItems>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <StackLayout
+            x:Name="contentPage"
+            Grid.Row="0"
+            Margin="10"
+            InputTransparent="false">
+            <custom:RoundedCornerView BorderWidth="1" RoundedCornerRadius="25">
+                <SearchBar
+                    BackgroundColor="#A0CCDA"
+                    HeightRequest="46"
+                    IsVisible="{Binding ShowHide}"
+                    Placeholder="{i18n:Translate Search}"
+                    SearchCommand="{Binding SearchCommand}"
+                    Text="{Binding Filter, Mode=TwoWay}" />
+            </custom:RoundedCornerView>
+            <Label
+                x:Name="status"
+                FontSize="24"
+                HorizontalOptions="FillAndExpand"
+                HorizontalTextAlignment="Center"
+                IsVisible="{Binding IsVisibleStatus}"
+                Text="{i18n:Translate NoResult}"
+                TextColor="Black"
+                VerticalOptions="FillAndExpand"
+                VerticalTextAlignment="Center" />
+            <ListView
+                HasUnevenRows="true"
+                IsPullToRefreshEnabled="true"
+                IsRefreshing="{Binding IsRefreshing, Mode=TwoWay}"
+                ItemsSource="{Binding Provinces}"
+                RefreshCommand="{Binding RefreshCommand}"
+                SeparatorVisibility="Default">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <ViewCell.ContextActions>
+                                <MenuItem
+                                    Clicked="Update_Province"
+                                    CommandParameter="{Binding .}"
+                                    IconImageSource="edit.png"
+                                    Text="Edit" />
+                                <MenuItem
+                                    Command="{Binding DeleteCommand}"
+                                    IconImageSource="trash.png"
+                                    IsDestructive="true"
+                                    Text="Delete" />
+                            </ViewCell.ContextActions>
+                            <custom:RoundedCornerView
+                                Margin="3"
+                                BorderColor="#00B2CA"
+                                BorderWidth="1"
+                                RoundedCornerRadius="45">
+                                <Grid BackgroundColor="#00B2CA">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <StackLayout
+                                        Grid.Column="1"
+                                        Margin="5"
+                                        Padding="20,0,0,0"
+                                        Orientation="Vertical"
+                                        VerticalOptions="Center">
+                                        <Label
+                                            FontAttributes="Bold"
+                                            FontFamily="Arial, Helvetica, sans-serif"
+                                            FontSize="18"
+                                            Text="{Binding code}"
+                                            TextColor="#FFFFFF" />
+                                        <Label
+                                            FontAttributes="Italic"
+                                            FontSize="16"
+                                            Text="{Binding description}"
+                                            TextColor="#C6DEC6" />
+                                        <Label
+                                            FontFamily="Times New Roman"
+                                            FontSize="14"
+                                            Text="{Binding region.description}"
+                                            TextColor="#4C4C47" />
+                                    </StackLayout>
+                                </Grid>
+                            </custom:RoundedCornerView>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <!-- <pv:PancakeView
+            Margin="30"
+            Padding="15"
+            BackgroundColor="Transparent"
+            CornerRadius="40"
+            HorizontalOptions="End"
+            VerticalOptions="End">
+            <pv:PancakeView.BackgroundGradientStops>
+                <pv:GradientStopCollection>
+                    <pv:GradientStop Offset="0" Color="LightBlue" />
+                    <pv:GradientStop Offset="1" Color="SlateBlue" />
+                </pv:GradientStopCollection>
+            </pv:PancakeView.BackgroundGradientStops>
+            <Image
+                HeightRequest="30"
+                Rotation="180"
+                Source="add"
+                WidthRequest="30">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="Add_Province" />
+                </Image.GestureRecognizers>
+            </Image>
+        </pv:PancakeView>-->
+        </StackLayout>
+        <!--  menu items  -->
+        <StackLayout
+            x:Name="menuitems"
+            Grid.Row="0"
+            HorizontalOptions="End"
+            InputTransparent="false"
+            IsVisible="true"
+            VerticalOptions="End">
+            <StackLayout.Margin>
+                <OnPlatform x:TypeArguments="Thickness">
+                    <On Platform="iOS">0,20,20,80</On>
+                    <On Platform="Android">0,20,20,50</On>
+                </OnPlatform>
+            </StackLayout.Margin>
+            <!--  menu image  -->
+            <Frame
+                Margin="0"
+                Padding="0"
+                BackgroundColor="Transparent"
+                CornerRadius="20"
+                HasShadow="False"
+                HorizontalOptions="End"
+                VerticalOptions="Start"
+                WidthRequest="250">
+                <StackLayout>
+                    <Frame
+                        Margin="0"
+                        Padding="0"
+                        BackgroundColor="White"
+                        HeightRequest="50"
+                        HorizontalOptions="End"
+                        WidthRequest="50">
+                        <Frame.CornerRadius>
+                            <OnPlatform x:TypeArguments="x:Single">
+                                <On Platform="iOS" Value="30" />
+                                <On Platform="Android" Value="40" />
+                            </OnPlatform>
+                        </Frame.CornerRadius>
+                        <Image
+                            x:Name="menu"
+                            Margin="0,0,5,0"
+                            HeightRequest="50"
+                            HorizontalOptions="End"
+                            Source="add_black.png"
+                            WidthRequest=" 40">
+                            <Image.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="Add_Province" />
+                            </Image.GestureRecognizers>
+                        </Image>
+                    </Frame>
+
+                    <!--  menu list layout  -->
+                    <StackLayout
+                        x:Name="menulist"
+                        Margin="0,-300,0,82"
+                        IsVisible="false"
+                        Orientation="Vertical">
+                        <!--  Add Province menu item  -->
+                        <StackLayout
+                            Margin="0"
+                            HorizontalOptions="End"
+                            Orientation="Horizontal">
+                            <Frame
+                                Margin="0,0,20,0"
+                                Padding="0"
+                                BackgroundColor="White"
+                                CornerRadius="10"
+                                HasShadow="False"
+                                VerticalOptions="Center"
+                                WidthRequest="130">
+                                <Label
+                                    FontAttributes="Bold"
+                                    FontSize="Default"
+                                    HeightRequest="30"
+                                    HorizontalOptions="Center"
+                                    Text="New Province"
+                                    TextColor="Black"
+                                    VerticalOptions="Center"
+                                    VerticalTextAlignment="Center" />
+                            </Frame>
+
+                            <Frame
+                                Margin="0"
+                                Padding="0"
+                                BackgroundColor="White"
+                                HasShadow="False"
+                                HeightRequest="50"
+                                WidthRequest="50">
+                                <Frame.CornerRadius>
+                                    <OnPlatform x:TypeArguments="x:Single">
+                                        <On Platform="iOS" Value="25" />
+                                        <On Platform="Android" Value="40" />
+                                    </OnPlatform>
+                                </Frame.CornerRadius>
+                                <Image
+                                    HeightRequest="40"
+                                    Source="setting.png"
+                                    WidthRequest=" 40">
+                                    <Image.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="Add_Province" />
+                                    </Image.GestureRecognizers>
+                                </Image>
+                            </Frame>
+                        </StackLayout>
+                        <!--  Search menu item  -->
+                        <StackLayout
+                            Margin="0,20,0,10"
+                            HorizontalOptions="End"
+                            Orientation="Horizontal">
+                            <Frame
+                                Margin="0"
+                                Padding="0"
+                                BackgroundColor="White"
+                                CornerRadius="10"
+                                HasShadow="False"
+                                VerticalOptions="Center"
+                                WidthRequest="130">
+                                <Label
+                                    FontAttributes="Bold"
+                                    FontSize="Default"
+                                    HeightRequest="30"
+                                    HorizontalOptions="Center"
+                                    Text="Search"
+                                    TextColor="Black"
+                                    VerticalOptions="Center"
+                                    VerticalTextAlignment="Center" />
+                            </Frame>
+                            <Frame
+                                Margin="20,0,0,0"
+                                Padding="0"
+                                BackgroundColor="White"
+                                HasShadow="False"
+                                HeightRequest="50"
+                                WidthRequest="50">
+                                <Frame.CornerRadius>
+                                    <OnPlatform x:TypeArguments="x:Single">
+                                        <On Platform="iOS" Value="25" />
+                                        <On Platform="Android" Value="40" />
+                                    </OnPlatform>
+                                </Frame.CornerRadius>
+                                <Image
+                                    HeightRequest="40"
+                                    Source="ic_search_white_24dp.png"
+                                    WidthRequest=" 40" />
+                            </Frame>
+
+                        </StackLayout>
+                        <!--  Client menu item  -->
+                        <StackLayout
+                            Margin="0,10,0,10"
+                            HorizontalOptions="End"
+                            Orientation="Horizontal">
+                            <Frame
+                                Margin="0"
+                                Padding="0"
+                                BackgroundColor="White"
+                                CornerRadius="10"
+                                HasShadow="False"
+                                VerticalOptions="Center"
+                                WidthRequest="130">
+                                <Label
+                                    FontAttributes="Bold"
+                                    FontSize="Default"
+                                    HeightRequest="30"
+                                    HorizontalOptions="Center"
+                                    Text="Client"
+                                    TextColor="Black"
+                                    VerticalOptions="Center"
+                                    VerticalTextAlignment="Center" />
+                            </Frame>
+                            <Frame
+                                Margin="20,0,0,0"
+                                Padding="0"
+                                BackgroundColor="White"
+                                HasShadow="False"
+                                HeightRequest="50"
+                                WidthRequest="50">
+                                <Frame.CornerRadius>
+                                    <OnPlatform x:TypeArguments="x:Single">
+                                        <On Platform="iOS" Value="25" />
+                                        <On Platform="Android" Value="40" />
+                                    </OnPlatform>
+                                </Frame.CornerRadius>
+                                <Image
+                                    HeightRequest="40"
+                                    Source="client.png"
+                                    WidthRequest=" 40" />
+                            </Frame>
+
+                        </StackLayout>
+
+                    </StackLayout>
+
+                </StackLayout>
+            </Frame>
+        </StackLayout>
+    </Grid>
+</ContentPage>

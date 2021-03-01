@@ -1,0 +1,191 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<pages:PopupPage
+    x:Class="XamarinApplication.Views.ComponentProductPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:animations="clr-namespace:Rg.Plugins.Popup.Animations;assembly=Rg.Plugins.Popup"
+    xmlns:autocomplete="clr-namespace:Syncfusion.SfAutoComplete.XForms;assembly=Syncfusion.SfAutoComplete.XForms"
+    xmlns:custom="clr-namespace:XamarinApplication"
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+    xmlns:inputLayout="clr-namespace:Syncfusion.XForms.TextInputLayout;assembly=Syncfusion.Core.XForms"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+    mc:Ignorable="d">
+    <pages:PopupPage.Animation>
+        <animations:ScaleAnimation
+            DurationIn="400"
+            DurationOut="300"
+            EasingIn="SinOut"
+            EasingOut="SinIn"
+            HasBackgroundAnimation="True"
+            PositionIn="Center"
+            PositionOut="Center"
+            ScaleIn="1.2"
+            ScaleOut="0.8" />
+    </pages:PopupPage.Animation>
+    <StackLayout
+        Margin="5,50,5,50"
+        HorizontalOptions="Center"
+        VerticalOptions="Center">
+        <Frame
+            Margin="1"
+            BackgroundColor="#FDFFFC"
+            BorderColor="#FDFFFC"
+            HasShadow="true">
+            <StackLayout>
+                <StackLayout HorizontalOptions="End" VerticalOptions="End">
+                    <StackLayout.GestureRecognizers>
+                        <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Close_Component" />
+                    </StackLayout.GestureRecognizers>
+                    <Image
+                        HeightRequest="45"
+                        Source="close.png"
+                        WidthRequest="45" />
+                </StackLayout>
+                <StackLayout Orientation="Horizontal">
+                    <Label
+                        Margin="5,-20,5,1"
+                        FontAttributes="Bold"
+                        FontSize="Large"
+                        HorizontalOptions="Center"
+                        Text="Components" />
+                    <Image
+                        Margin="30,0,0,0"
+                        HeightRequest="30"
+                        Source="plus"
+                        WidthRequest="30">
+                        <Image.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding AddComponentProduct}" />
+                        </Image.GestureRecognizers>
+                    </Image>
+                </StackLayout>
+                <BoxView
+                    HeightRequest="1"
+                    WidthRequest="100"
+                    Color="#BFC0C0" />
+                <StackLayout Orientation="Horizontal">
+                    <Label
+                        FontAttributes="Bold"
+                        FontSize="18"
+                        HorizontalOptions="CenterAndExpand"
+                        Text="{Binding Product.code}"
+                        TextColor="Black" />
+                    <Label
+                        FontAttributes="Bold"
+                        FontSize="18"
+                        HorizontalOptions="CenterAndExpand"
+                        Text="-"
+                        TextColor="Black" />
+                    <Label
+                        FontAttributes="Bold"
+                        FontSize="18"
+                        HorizontalOptions="CenterAndExpand"
+                        Text="{Binding Product.description}"
+                        TextColor="Black" />
+                </StackLayout>
+                <Label
+                    x:Name="label"
+                    Margin="2,20,2,3"
+                    FontSize="26"
+                    HorizontalOptions="FillAndExpand"
+                    HorizontalTextAlignment="Center"
+                    IsVisible="{Binding IsVisible}"
+                    Text="Empty List"
+                    VerticalOptions="FillAndExpand"
+                    VerticalTextAlignment="Center" />
+                <ListView
+                    HasUnevenRows="true"
+                    ItemsSource="{Binding ProductObservableCollection}"
+                    SeparatorColor="Gray"
+                    SeparatorVisibility="Default">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <custom:RoundedCornerView
+                                    Margin="3"
+                                    BorderColor="#CFE3DC"
+                                    BorderWidth="1"
+                                    RoundedCornerRadius="10">
+                                    <Grid BackgroundColor="#CFE3DC">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+                                        <StackLayout
+                                            Grid.Column="1"
+                                            Margin="5"
+                                            Padding="20,0,0,0"
+                                            Orientation="Vertical"
+                                            VerticalOptions="Center">
+                                            <inputLayout:SfTextInputLayout
+                                                ContainerBackgroundColor="#FFFFFF"
+                                                ContainerType="Outlined"
+                                                FocusedColor="#FFFFFF"
+                                                UnfocusedColor="#FFFFFF">
+                                                <custom:RoundedEntry
+                                                    FontAttributes="Bold"
+                                                    FontFamily="Arial, Helvetica, sans-serif"
+                                                    FontSize="18"
+                                                    Text="{Binding code}"
+                                                    TextColor="#587B7F" />
+                                                <!--<autocomplete:SfAutoComplete
+                                                DataSource="{Binding PackagingMethodAutoComplete}"
+                                                DisplayMemberPath="code"
+                                                HeightRequest="50"
+                                                HorizontalOptions="CenterAndExpand"
+                                                SelectedItem="{Binding ProductAutocomplete}" Text="{Binding code}"
+                                                SuggestionMode="StartsWith"
+                                                TextColor="Black"
+                                                VerticalOptions="CenterAndExpand"
+                                                WidthRequest="210" />-->
+                                            </inputLayout:SfTextInputLayout>
+                                            <StackLayout Orientation="Horizontal">
+                                                <Label
+                                                    FontAttributes="Bold"
+                                                    FontSize="16"
+                                                    HorizontalOptions="CenterAndExpand"
+                                                    Text="{Binding code}"
+                                                    TextColor="Black" />
+                                                <Label
+                                                    FontAttributes="Bold"
+                                                    FontSize="16"
+                                                    HorizontalOptions="CenterAndExpand"
+                                                    Text="-"
+                                                    TextColor="Black" />
+                                                <Label
+                                                    FontAttributes="Bold"
+                                                    FontSize="16"
+                                                    HorizontalOptions="CenterAndExpand"
+                                                    Text="{Binding description}"
+                                                    TextColor="Black" />
+                                            </StackLayout>
+                                        </StackLayout>
+                                    </Grid>
+                                </custom:RoundedCornerView>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+                <StackLayout HorizontalOptions="CenterAndExpand" Orientation="Horizontal">
+                    <Button
+                        BackgroundColor="#00B2CA"
+                        Command="{Binding SaveComponent}"
+                        CornerRadius="25"
+                        HorizontalOptions="Center"
+                        Text="Continuer"
+                        TextColor="#090C9B"
+                        WidthRequest="120" />
+                    <Button
+                        BackgroundColor="#E0E2DB"
+                        Clicked="Close_Component"
+                        CornerRadius="25"
+                        HeightRequest="40"
+                        HorizontalOptions="StartAndExpand"
+                        Text="Annuler"
+                        TextColor="#9D695A"
+                        WidthRequest="120" />
+                </StackLayout>
+            </StackLayout>
+
+        </Frame>
+    </StackLayout>
+</pages:PopupPage>

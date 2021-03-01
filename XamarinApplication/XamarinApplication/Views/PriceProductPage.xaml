@@ -1,0 +1,237 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<pages:PopupPage
+    x:Class="XamarinApplication.Views.PriceProductPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:animations="clr-namespace:Rg.Plugins.Popup.Animations;assembly=Rg.Plugins.Popup"
+    xmlns:autocomplete="clr-namespace:Syncfusion.SfAutoComplete.XForms;assembly=Syncfusion.SfAutoComplete.XForms"
+    xmlns:custom="clr-namespace:XamarinApplication"
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+    xmlns:i18n="clr-namespace:XamarinApplication.Helpers"
+    xmlns:inputLayout="clr-namespace:Syncfusion.XForms.TextInputLayout;assembly=Syncfusion.Core.XForms"
+    xmlns:material="clr-namespace:XF.Material.Forms.UI;assembly=XF.Material.Forms"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+    mc:Ignorable="d">
+    <pages:PopupPage.Animation>
+        <animations:ScaleAnimation
+            DurationIn="400"
+            DurationOut="300"
+            EasingIn="SinOut"
+            EasingOut="SinIn"
+            HasBackgroundAnimation="True"
+            PositionIn="Center"
+            PositionOut="Center"
+            ScaleIn="1.2"
+            ScaleOut="0.8" />
+    </pages:PopupPage.Animation>
+    <StackLayout
+        Margin="5,50,5,50"
+        HorizontalOptions="Center"
+        VerticalOptions="Center">
+        <Frame
+            Margin="1"
+            BackgroundColor="#FDFFFC"
+            BorderColor="#FDFFFC"
+            HasShadow="true">
+            <StackLayout>
+                <StackLayout HorizontalOptions="End" VerticalOptions="End">
+                    <StackLayout.GestureRecognizers>
+                        <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="Close_Price" />
+                    </StackLayout.GestureRecognizers>
+                    <Image
+                        HeightRequest="45"
+                        Source="close.png"
+                        WidthRequest="45" />
+                </StackLayout>
+                <StackLayout Orientation="Horizontal">
+                    <Label
+                        FontAttributes="Bold"
+                        FontSize="Large"
+                        HorizontalOptions="Center"
+                        Text="Prices Log" />
+                    <Image
+                        Margin="20,0,0,0"
+                        HeightRequest="40"
+                        Source="pdf"
+                        WidthRequest="40">
+                        <Image.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding DownloadPdf}" />
+                        </Image.GestureRecognizers>
+                    </Image>
+                    <Image
+                        Margin="20,0,0,0"
+                        HeightRequest="40"
+                        Source="excel"
+                        WidthRequest="40">
+                        <Image.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding DownloadExcel}" />
+                        </Image.GestureRecognizers>
+                    </Image>
+                </StackLayout>
+                <BoxView
+                    HeightRequest="1"
+                    WidthRequest="100"
+                    Color="#BFC0C0" />
+                <StackLayout Orientation="Vertical">
+                    <!-- <Label
+                    FontAttributes="Bold"
+                    FontSize="18"
+                    HorizontalOptions="CenterAndExpand"
+                    Text="Product"
+                    TextColor="Black" />-->
+                    <inputLayout:SfTextInputLayout
+                        Margin="0,-10,0,0"
+                        ContainerBackgroundColor="#E6EEF9"
+                        ContainerType="Outlined"
+                        FocusedColor="#0450C2"
+                        Hint="{i18n:Translate Supplier}"
+                        LeadingViewPosition="Inside"
+                        OutlineCornerRadius="20"
+                        UnfocusedColor="Blue">
+                        <autocomplete:SfAutoComplete
+                            BorderColor="Blue"
+                            DataSource="{Binding SupplierAutoComplete}"
+                            DisplayMemberPath="description"
+                            HeightRequest="50"
+                            IsSelectedItemsVisibleInDropDown="false"
+                            NoResultsFoundFontAttributes="Bold"
+                            NoResultsFoundFontSize="16"
+                            NoResultsFoundText="No Results Found"
+                            NoResultsFoundTextColor="DarkGreen"
+                            SelectedItem="{Binding Supplier}"
+                            SuggestionMode="StartsWith"
+                            TextColor="Black"
+                            WidthRequest="210">
+                            <autocomplete:SfAutoComplete.TokenSettings>
+                                <autocomplete:TokenSettings
+                                    BackgroundColor="#66ccff"
+                                    CornerRadius="15"
+                                    DeleteButtonColor="#993300"
+                                    DeleteButtonPlacement="Right"
+                                    FontFamily="Times New Roman"
+                                    FontSize="16"
+                                    IsCloseButtonVisible="true"
+                                    SelectedBackgroundColor="#ffffe0"
+                                    TextColor="White" />
+                            </autocomplete:SfAutoComplete.TokenSettings>
+                            <autocomplete:SfAutoComplete.ItemTemplate>
+                                <DataTemplate>
+                                    <StackLayout Orientation="Vertical">
+                                        <Label FontSize="16" Text="{Binding code}" />
+                                        <Label FontSize="14" Text="{Binding description}" />
+                                    </StackLayout>
+                                </DataTemplate>
+                            </autocomplete:SfAutoComplete.ItemTemplate>
+                        </autocomplete:SfAutoComplete>
+                        <inputLayout:SfTextInputLayout.LeadingView>
+                            <Image Source="supplier_search.png" />
+                        </inputLayout:SfTextInputLayout.LeadingView>
+                    </inputLayout:SfTextInputLayout>
+                    <inputLayout:SfTextInputLayout
+                        Margin="0,-15,0,0"
+                        ContainerBackgroundColor="#E6EEF9"
+                        ContainerType="Outlined"
+                        FocusedColor="#0450C2"
+                        Hint="{i18n:Translate ValidationTime}"
+                        OutlineCornerRadius="20"
+                        UnfocusedColor="Blue">
+                        <DatePicker
+                            Date="{Binding ValidationTime}"
+                            Format="yyyy-MM-dd"
+                            WidthRequest="280" />
+                    </inputLayout:SfTextInputLayout>
+                    <!-- <Button
+                        Margin="0,-15,0,0"
+                        BackgroundColor="#00B2CA"
+                        Command="{Binding GetPriceData}"
+                        CornerRadius="20"
+                        HorizontalOptions="Center"
+                        Text="Continuer"
+                        TextColor="#090C9B"
+                        WidthRequest="120" />-->
+                    <material:MaterialButton
+                        AllCaps="True"
+                        ButtonType="Elevated"
+                        Command="{Binding GetPriceData}"
+                        HorizontalOptions="Center"
+                        PressedBackgroundColor="Red"
+                        Text="{i18n:Translate Continue}"
+                        VerticalOptions="Center" />
+                </StackLayout>
+                <BoxView
+                    HeightRequest="1"
+                    WidthRequest="100"
+                    Color="#BFC0C0" />
+                <Label
+                    x:Name="label"
+                    FontSize="24"
+                    HorizontalOptions="FillAndExpand"
+                    HorizontalTextAlignment="Center"
+                    IsVisible="{Binding IsVisible}"
+                    Text="{i18n:Translate NoResult}"
+                    VerticalOptions="FillAndExpand"
+                    VerticalTextAlignment="Center" />
+                <ListView
+                    HasUnevenRows="true"
+                    ItemTapped="ListView_ItemTapped"
+                    ItemsSource="{Binding Product}"
+                    SeparatorColor="Gray"
+                    SeparatorVisibility="Default">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <custom:RoundedCornerView
+                                    Margin="3"
+                                    BorderColor="#CFE3DC"
+                                    BorderWidth="1"
+                                    RoundedCornerRadius="10">
+                                    <Grid BackgroundColor="#CFE3DC">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+                                        <StackLayout
+                                            Grid.Column="1"
+                                            Margin="5"
+                                            Padding="20,0,0,0"
+                                            Orientation="Vertical"
+                                            VerticalOptions="Center">
+                                            <StackLayout Orientation="Horizontal">
+                                                <Label
+                                                    FontAttributes="Bold"
+                                                    FontSize="16"
+                                                    HorizontalOptions="CenterAndExpand"
+                                                    Text="{Binding supplier.code}"
+                                                    TextColor="Black" />
+                                                <Label
+                                                    FontAttributes="Bold"
+                                                    FontSize="16"
+                                                    HorizontalOptions="CenterAndExpand"
+                                                    Text="-"
+                                                    TextColor="Black" />
+                                                <Label
+                                                    FontAttributes="Bold"
+                                                    FontSize="16"
+                                                    HorizontalOptions="CenterAndExpand"
+                                                    Text="{Binding supplier.description}"
+                                                    TextColor="Black" />
+                                            </StackLayout>
+
+                                            <!-- <Label
+                                                    FontAttributes="Bold"
+                                                    FontSize="16"
+                                                    HorizontalOptions="CenterAndExpand"
+                                                    Text="{Binding productDTOs.product.code}"
+                                                    TextColor="Black" />-->
+                                        </StackLayout>
+                                    </Grid>
+                                </custom:RoundedCornerView>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </StackLayout>
+
+        </Frame>
+    </StackLayout>
+</pages:PopupPage>

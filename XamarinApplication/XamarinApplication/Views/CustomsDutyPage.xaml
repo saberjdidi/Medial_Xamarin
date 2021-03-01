@@ -1,0 +1,403 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="XamarinApplication.Views.CustomsDutyPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:custom="clr-namespace:XamarinApplication"
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+    xmlns:i18n="clr-namespace:XamarinApplication.Helpers"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="{i18n:Translate CustomsDuty}"
+    mc:Ignorable="d">
+    <ContentPage.ToolbarItems>
+        <!-- <ToolbarItem Clicked="Add_CustomsDuty" IconImageSource="add" />-->
+        <ToolbarItem
+            Command="{Binding OpenSearchBar}"
+            IconImageSource="ic_search_white_24dp"
+            Text="{Binding ShowHide}" />
+    </ContentPage.ToolbarItems>
+    <Grid
+        BackgroundColor="White"
+        HorizontalOptions="FillAndExpand"
+        RowSpacing="0"
+        VerticalOptions="FillAndExpand">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <custom:RoundedCornerView
+            Grid.Row="1"
+            Margin="10,1,10,1"
+            BorderWidth="1"
+            RoundedCornerRadius="25">
+            <SearchBar
+                BackgroundColor="#A0CCDA"
+                HeightRequest="50"
+                IsVisible="{Binding ShowHide}"
+                Placeholder="{i18n:Translate Search}"
+                SearchCommand="{Binding SearchCommand}"
+                Text="{Binding Filter, Mode=TwoWay}" />
+        </custom:RoundedCornerView>
+        <Label
+            x:Name="status"
+            Grid.Row="2"
+            FontSize="24"
+            HorizontalOptions="FillAndExpand"
+            HorizontalTextAlignment="Center"
+            IsVisible="{Binding IsVisibleStatus}"
+            Text="{i18n:Translate NoResult}"
+            TextColor="Black"
+            VerticalOptions="FillAndExpand"
+            VerticalTextAlignment="Center" />
+        <ListView
+            Grid.Row="2"
+            HasUnevenRows="true"
+            IsPullToRefreshEnabled="true"
+            IsRefreshing="{Binding IsRefreshing, Mode=TwoWay}"
+            ItemsSource="{Binding CustomsDuty}"
+            RefreshCommand="{Binding RefreshCommand}"
+            SeparatorVisibility="Default">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <ViewCell.ContextActions>
+                            <MenuItem
+                                Clicked="Update_CustomsDuty"
+                                CommandParameter="{Binding .}"
+                                IconImageSource="edit.png"
+                                Text="Edit" />
+                            <MenuItem
+                                Command="{Binding DeleteCommand}"
+                                IconImageSource="trash.png"
+                                IsDestructive="true"
+                                Text="Delete" />
+                        </ViewCell.ContextActions>
+                        <custom:RoundedCornerView
+                            Margin="3"
+                            BorderColor="#00B2CA"
+                            BorderWidth="1"
+                            RoundedCornerRadius="45">
+                            <Grid BackgroundColor="#00B2CA">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <StackLayout
+                                    Grid.Column="1"
+                                    Margin="5"
+                                    Padding="20,0,0,0"
+                                    Orientation="Vertical"
+                                    VerticalOptions="Center">
+                                    <Label
+                                        FontAttributes="Bold"
+                                        FontFamily="Arial, Helvetica, sans-serif"
+                                        FontSize="18"
+                                        Text="{Binding code}"
+                                        TextColor="#FFFFFF" />
+                                    <Label
+                                        FontAttributes="Italic"
+                                        FontSize="16"
+                                        Text="{Binding description}"
+                                        TextColor="#C6DEC6" />
+                                    <Label
+                                        FontFamily="Times New Roman"
+                                        FontSize="14"
+                                        Text="{Binding taxRate}"
+                                        TextColor="#4C4C47" />
+                                </StackLayout>
+                            </Grid>
+                        </custom:RoundedCornerView>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <!--  menu items  -->
+        <StackLayout
+            x:Name="menuitems"
+            Grid.Row="2"
+            HorizontalOptions="End"
+            InputTransparent="false"
+            IsVisible="true"
+            VerticalOptions="End">
+            <StackLayout.Margin>
+                <OnPlatform x:TypeArguments="Thickness">
+                    <On Platform="iOS">0,20,20,80</On>
+                    <On Platform="Android">0,20,20,50</On>
+                </OnPlatform>
+            </StackLayout.Margin>
+            <!--  menu image  -->
+            <Frame
+                Margin="0"
+                Padding="0"
+                BackgroundColor="Transparent"
+                CornerRadius="20"
+                HasShadow="False"
+                HorizontalOptions="End"
+                VerticalOptions="Start"
+                WidthRequest="250">
+                <StackLayout>
+                    <Frame
+                        Margin="0"
+                        Padding="0"
+                        BackgroundColor="#007FFF"
+                        HeightRequest="50"
+                        HorizontalOptions="End"
+                        WidthRequest="50">
+                        <Frame.CornerRadius>
+                            <OnPlatform x:TypeArguments="x:Single">
+                                <On Platform="iOS" Value="30" />
+                                <On Platform="Android" Value="40" />
+                            </OnPlatform>
+                        </Frame.CornerRadius>
+                        <Image
+                            x:Name="menu"
+                            Margin="0,0,5,0"
+                            HeightRequest="50"
+                            HorizontalOptions="End"
+                            Source="add_white.png"
+                            WidthRequest=" 40">
+                            <Image.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="Add_CustomsDuty" />
+                            </Image.GestureRecognizers>
+                        </Image>
+                    </Frame>
+                </StackLayout>
+            </Frame>
+        </StackLayout>
+    </Grid>
+
+    <!--<Grid>
+        <Grid
+            Padding="30"
+            RowDefinitions="Auto, Auto, Auto, *"
+            RowSpacing="30">
+            <Grid ColumnDefinitions="Auto, *, Auto">
+                <ImageButton
+                    BackgroundColor="Transparent"
+                    HeightRequest="24"
+                    Source="menu.png"
+                    VerticalOptions="Center"
+                    WidthRequest="24" />
+                <Label
+                    Grid.Column="1"
+                    FontAttributes="Bold"
+                    FontSize="20"
+                    HorizontalOptions="Center"
+                    Text="Watch Shop"
+                    TextColor="#2D2942"
+                    VerticalOptions="Center" />
+                <Image
+                    Grid.Column="2"
+                    HeightRequest="24"
+                    Source="Cart.png"
+                    VerticalOptions="Center"
+                    WidthRequest="24" />
+            </Grid>
+            <Grid
+                Grid.Row="1"
+                ColumnDefinitions="*, Auto"
+                ColumnSpacing="15">
+                <Frame
+                    Padding="10"
+                    BackgroundColor="#E6EAEA"
+                    BorderColor="Transparent"
+                    CornerRadius="25">
+                    <StackLayout Orientation="Horizontal" Spacing="15">
+                        <Path
+                            Aspect="Uniform"
+                            Data="M17.8901 16.8296L12.6613 11.6007C13.653 10.3764 14.25 8.81977 14.25 7.12503C14.25 3.19631 11.0537 0 7.12499 0C3.19627 0 0 3.19631 0 7.12503C0 11.0537 3.19631 14.2501 7.12503 14.2501C8.81977 14.2501 10.3764 13.653 11.6007 12.6613L16.8296 17.8902C16.9761 18.0366 17.2135 18.0366 17.36 17.8902L17.8902 17.3599C18.0366 17.2135 18.0366 16.976 17.8901 16.8296ZM7.12503 12.75C4.02322 12.75 1.50001 10.2268 1.50001 7.12503C1.50001 4.02322 4.02322 1.50001 7.12503 1.50001C10.2268 1.50001 12.75 4.02322 12.75 7.12503C12.75 10.2268 10.2268 12.75 7.12503 12.75Z"
+                            Fill="#2D2942"
+                            HeightRequest="18"
+                            Opacity="0.5"
+                            VerticalOptions="Center"
+                            WidthRequest="18" />
+                        <Label
+                            FontSize="15"
+                            HorizontalOptions="Center"
+                            Opacity="0.5"
+                            Text="Search"
+                            TextColor="#2D2942"
+                            VerticalOptions="Center" />
+                    </StackLayout>
+                </Frame>
+                <Grid Grid.Column="1" HorizontalOptions="End">
+                    <Ellipse
+                        Fill="White"
+                        HeightRequest="42"
+                        WidthRequest="42" />
+                    <Image
+                        HeightRequest="20"
+                        Source="Filter.png"
+                        VerticalOptions="Center"
+                        WidthRequest="20" />
+                </Grid>
+            </Grid>
+            <Grid
+                Grid.Row="2"
+                ColumnDefinitions="*, Auto"
+                ColumnSpacing="15">
+                <Label
+                    FontAttributes="Bold"
+                    FontSize="20"
+                    Text="Popular"
+                    TextColor="#2D2942"
+                    VerticalOptions="Center" />
+                <Image
+                    Grid.Column="1"
+                    HeightRequest="20"
+                    Source="add.png"
+                    VerticalOptions="Center"
+                    WidthRequest="20" />
+            </Grid>
+            <CollectionView
+                Grid.Row="3"
+                ItemsSource="{Binding CustomsDuty}"
+                SelectionMode="Single">
+                <CollectionView.ItemsLayout>
+                    <GridItemsLayout Orientation="Vertical" Span="2" />
+                </CollectionView.ItemsLayout>
+                <CollectionView.EmptyView>
+                    <Label
+                        HorizontalOptions="Center"
+                        Text="No Item found."
+                        TextColor="Gray"
+                        VerticalOptions="Center" />
+                </CollectionView.EmptyView>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid
+                            Padding="15"
+                            BackgroundColor="White"
+                            HeightRequest="190"
+                            RowDefinitions="*, 2.5*">
+                            <Grid.Clip>
+                                <PathGeometry Figures="M20 96.5596C20 92.4719 22.0807 88.6655 25.5215 86.4586L146.521 8.85176C154.508 3.72922 165 9.46434 165 18.9527V185C165 191.627 159.627 197 153 197H32C25.3726 197 20 191.627 20 185V96.5596Z" />
+                            </Grid.Clip>
+                            <Grid HorizontalOptions="End" VerticalOptions="Start">
+                                <Ellipse
+                                    Fill="Red"
+                                    HeightRequest="20"
+                                    WidthRequest="20" />
+                                <Path
+                                    Aspect="Uniform"
+                                    Data="M9.2067 1.41754C8.68904 0.856094 7.97874 0.546875 7.2065 0.546875C6.62926 0.546875 6.10062 0.72937 5.63522 1.08925C5.40039 1.2709 5.18761 1.49315 5 1.75255C4.81247 1.49323 4.59961 1.2709 4.3647 1.08925C3.89938 0.72937 3.37074 0.546875 2.7935 0.546875C2.02126 0.546875 1.31088 0.856094 0.793228 1.41754C0.281754 1.97243 0 2.73048 0 3.55217C0 4.39789 0.31517 5.17204 0.991821 5.98854C1.59714 6.7189 2.46712 7.46033 3.47458 8.31886C3.81859 8.61206 4.20853 8.9444 4.61342 9.2984C4.72038 9.39209 4.85764 9.44366 5 9.44366C5.14229 9.44366 5.27962 9.39209 5.38643 9.29855C5.79132 8.94447 6.18149 8.61198 6.52565 8.31863C7.53296 7.46025 8.40294 6.7189 9.00826 5.98846C9.68491 5.17204 10 4.39789 10 3.55209C10 2.73048 9.71825 1.97243 9.2067 1.41754Z"
+                                    Fill="White"
+                                    HorizontalOptions="Center"
+                                    VerticalOptions="Center" />
+                            </Grid>
+                            <StackLayout
+                                Grid.Row="1"
+                                Padding="10,0,0,0"
+                                HorizontalOptions="FillAndExpand"
+                                Orientation="Horizontal"
+                                VerticalOptions="FillAndExpand">
+                                <Image
+                                    st:Transition.Group="{Binding Name}"
+                                    st:Transition.Name="WatchImage"
+                                    HorizontalOptions="Start"
+                                    Source="{Binding Image}"
+                                    WidthRequest="45" />
+                                <StackLayout Spacing="5" VerticalOptions="CenterAndExpand">
+                                    <Label
+                                        FontSize="14"
+                                        Text="{Binding code}"
+                                        TextColor="#2D2942" />
+                                    <Label
+                                        FontSize="12"
+                                        Opacity="0.5"
+                                        Text="{Binding description}"
+                                        TextColor="#2D2942" />
+                                    <Label
+                                        FontAttributes="Bold"
+                                        FontSize="14"
+                                        Text="{Binding taxRate, StringFormat='${0}'}"
+                                        TextColor="#2D2942" />
+                                    <StackLayout Orientation="Horizontal">
+                                        <Label
+                                            FontSize="12"
+                                            Opacity="0.5"
+                                            Text="{Binding Rating}"
+                                            TextColor="#2D2942" />
+                                        <Path
+                                            Aspect="Uniform"
+                                            Data="M6 0L7.86916 3.42733L11.7063 4.1459L9.02436 6.98267L9.52671 10.8541L6 9.18L2.47329 10.8541L2.97564 6.98267L0.293661 4.1459L4.13084 3.42733L6 0Z"
+                                            Fill="#FFC344"
+                                            HeightRequest="12"
+                                            WidthRequest="12" />
+                                        <Image
+                                            Margin="5,0,0,0"
+                                            HeightRequest="12"
+                                            Source="eye.png"
+                                            WidthRequest="12" />
+                                        <Label
+                                            FontSize="12"
+                                            Opacity="0.5"
+                                            Text="{Binding Views}"
+                                            TextColor="#2D2942" />
+                                    </StackLayout>
+                                </StackLayout>
+                            </StackLayout>
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </Grid>
+         <Grid x:Name="MenuGrid" IsVisible="False">
+            <BoxView
+                x:Name="MenuOverlay"
+                BackgroundColor="Black"
+                Opacity="0.35">
+                <BoxView.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OverlayTapped" />
+                </BoxView.GestureRecognizers>
+            </BoxView>
+            <Grid
+                x:Name="MenuView"
+                BackgroundColor="#483635"
+                HorizontalOptions="Start"
+                TranslationX="-260"
+                WidthRequest="260">
+                <Grid.Clip>
+                    <PathGeometry Figures="M0,0V511.043H140.714l86.992-116.012V0Z" />
+                </Grid.Clip>
+                <StackLayout
+                    Margin="30,100"
+                    BindableLayout.ItemsSource="{Binding MenuList}"
+                    Spacing="20">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate>
+                            <StackLayout Orientation="Horizontal" Spacing="20">
+                                <Grid
+                                    Grid.Row="2"
+                                    HeightRequest="46"
+                                    HorizontalOptions="Start"
+                                    VerticalOptions="Start"
+                                    WidthRequest="46">
+                                    <Ellipse
+                                        Fill="White"
+                                        HeightRequest="46"
+                                        Opacity="0.5"
+                                        WidthRequest="46" />
+                                    <Image
+                                        HeightRequest="22"
+                                        HorizontalOptions="Center"
+                                        Source="{Binding Icon}"
+                                        VerticalOptions="Center"
+                                        WidthRequest="22" />
+                                </Grid>
+                                <Label
+                                    FontFamily="NormalFont"
+                                    FontSize="16"
+                                    Text="{Binding Name}"
+                                    TextColor="White"
+                                    VerticalOptions="Center" />
+                            </StackLayout>
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </StackLayout>
+            </Grid>
+        </Grid>
+    </Grid>-->
+</ContentPage>
